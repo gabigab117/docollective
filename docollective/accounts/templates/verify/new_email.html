@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% load crispy_forms_tags %}
+
+{% block title %}Nouvel email{% endblock %}
+
+
+{% block body %}
+<div class="row">
+    <div class="col-6">
+ <form method='POST' >
+            {% csrf_token %}
+
+            <fieldset>
+                {{ form|crispy }}
+            </fieldset>
+
+            <div style="margin-top: 50px;">
+                <button class="btn btn-dark" type="submit">Envoyer</button>
+            </div>
+</form>
+    </div>
+    <div class="col-6">
+<div class="text-center">
+<img src="{% static 'assets/signup_compress.jpg' %}" class="img-fluid">
+</div>
+    </div>
+</div>
+{% endblock %}

@@ -24,21 +24,32 @@
                 class="navbar-toggler-icon"></span></button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
-                <li class="nav-item"><a class="nav-link active" aria-current="page" href="#!">Inscription</a></li>
-                <li class="nav-item"><a class="nav-link active" aria-current="page" href="#!">Connexion</a></li>
-                <li class="nav-item"><a class="nav-link" href="#!">A propos</a></li>
+                {% if request.user.is_authenticated %}
+                <li class="nav-item"><a class="nav-link active" aria-current="page" href="#!">Déconnexion</a></li>
+                <li class="nav-item"><a class="nav-link active" aria-current="page" href="#!">Profil</a></li>
+                <li class="nav-item"><a class="nav-link active" aria-current="page" href="#!">Mettre en ventes</a></li>
+                <li class="nav-item"><a class="nav-link active" aria-current="page" href="#!">Mes commandes/ ventes</a></li>
+                {% else %}
+                <li class="nav-item"><a class="nav-link active" aria-current="page" href="{% url 'accounts:signup' %}">Inscription</a></li>
+                <li class="nav-item"><a class="nav-link active" aria-current="page" href="{% url 'accounts:login' %}">Connexion</a></li>
+                {% endif %}
+                <li class="nav-item"><a class="nav-link active" aria-current="page" href="#!">A propos</a></li>
+                <li class="nav-item"><a class="nav-link active" aria-current="page" href="#!">Nous contacter</a></li>
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button"
+                    <a class="nav-link active dropdown-toggle" id="navbarDropdown" href="#" role="button"
                        data-bs-toggle="dropdown" aria-expanded="false">Magasin</a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <li><a class="dropdown-item" href="#!">All Products</a></li>
+                        <li><a class="dropdown-item" href="#!">Tous les articles</a></li>
                         <li>
                             <hr class="dropdown-divider"/>
                         </li>
-                        <li><a class="dropdown-item" href="#!">Popular Items</a></li>
-                        <li><a class="dropdown-item" href="#!">New Arrivals</a></li>
+                        <li><a class="dropdown-item" href="#!">Nouveautés</a></li>
+                        <li><a class="dropdown-item" href="#!">Mes favoris</a></li>
                     </ul>
                 </li>
+                {% if request.user.is_superuser %}
+                <li class="nav-item"><a class="nav-link active" aria-current="page" href="{% url 'admin:index' %}">Administration de l'app</a></li>
+                {% endif %}
             </ul>
             <form class="d-flex">
                 <button class="btn btn-outline-dark" type="submit">
@@ -54,8 +65,8 @@
 <header class="bg-dark py-5">
     <div class="container px-4 px-lg-5 my-5">
         <div class="text-center text-white">
-            <h1 class="display-4 fw-bolder">Shop in style</h1>
-            <p class="lead fw-normal text-white-50 mb-0">With this shop hompeage template</p>
+            <h1 class="display-4 fw-bolder">DoCollective</h1>
+            <p class="lead fw-normal text-white-50 mb-0">Markeplace pour vos vêtements</p>
         </div>
     </div>
 </header>

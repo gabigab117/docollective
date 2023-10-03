@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block title %}Activation ok{% endblock %}
+
+
+{% block body %}
+<div class="row">
+    <div class="col">
+        <h3>Vous pouvez désormais vous connecter</h3>
+        <a href="{% url 'accounts:login' %}" class="btn btn-dark">Connexion</a>
+    </div>
+
+</div>
+{% endblock %}

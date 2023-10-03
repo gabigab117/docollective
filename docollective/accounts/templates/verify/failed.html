@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% load crispy_forms_tags %}
+
+{% block title %}Echec{% endblock %}
+
+
+{% block body %}
+<div class="row">
+    <div class="col">
+        <h3>Une erreur est survenue avec le lien</h3>
+        <a href="{% url 'request-new-link-from-email' %}" class="btn btn-dark">Demander un nouveau lien</a>
+    </div>
+
+</div>
+{% endblock %}
