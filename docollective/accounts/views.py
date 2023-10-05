@@ -1,3 +1,4 @@
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.views import LoginView
 from django.contrib.auth import logout
 from django.shortcuts import render, redirect
@@ -27,3 +28,14 @@ class ExChangerLogin(LoginView):
 def exchanger_logout(request):
     logout(request)
     return redirect("index")
+
+
+@login_required
+def exchanger_profile(request):
+    user = request.user
+    default_adresse = user.adresses.get(user=user, default=True)
+    adresses = user.adresses.filter(user=user, default=False)
+
+    return render(request, "accounts/profile.html", context={"user": user,
+                                                             "default_adresse": default_adresse,
+                                                             "adresses": adresses})

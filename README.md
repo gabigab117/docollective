@@ -5,3 +5,4 @@
 - Confirmation des mails
 - Captcha
 - modèles
+- limiter à 5 adresses

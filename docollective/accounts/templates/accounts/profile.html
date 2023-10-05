@@ -1,0 +1,108 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block title %}Profil{% endblock %}
+
+
+{% block body %}
+<div class="row">
+    <div class="col-4">
+
+        <div class="text-center">
+            <div class="card" style="width: 18rem;">
+                <div class="card-header">
+                    Profil
+                </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">{{ user.email }}</li>
+                    <li class="list-group-item">{{ user.username }}</li>
+                    <li class="list-group-item">{{ user.first_name }}</li>
+                    <li class="list-group-item">{{ user.last_name }}</li>
+                </ul>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="col-4">
+
+        <div class="text-center">
+            {% if default_adresse %}
+            <div class="card" style="width: 18rem;">
+                <div class="card-header">
+                    Adresse par défaut
+                </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">{{ default_adresse.name }}</li>
+                    <li class="list-group-item">{{ default_adresse.address_1 }}</li>
+                    {% if default_adresse.address_2 %}
+                    <li class="list-group-item">{{ default_adresse.address_2 }}</li>
+                    {% endif %}
+                    <li class="list-group-item">{{ default_adresse.zip_code }} - {{ default_adresse.city }}</li>
+                    <li class="list-group-item">{{ default_adresse.get_country_display }}</li>
+                </ul>
+            </div>
+
+
+            {% else %}
+            Pas d'adresse(s) enregistrées
+            {% endif %}
+
+
+        </div>
+
+    </div>
+    <div class="col-4">
+
+        <div class="text-center">
+            Ici les prochains boutons : <br>
+            Modifier Mot de passe <br>
+            Modifier Mail
+
+        </div>
+
+    </div>
+
+</div>
+<div class="row" style="margin-top: 20px;">
+
+    <div class="col">
+
+        <div class="text-center">
+            <p class="d-inline-flex gap-1">
+                <button class="btn btn-primary" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                    Autres adresses
+                </button>
+            </p>
+            <div class="collapse" id="collapseExample">
+                {% for adresse in adresses %}
+                <div class="card card-body mx-auto" style="margin-bottom: 20px; max-width: 300px;">
+                    <!--
+                    Toutes les adresses False
+                    -->
+
+
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">{{ adresse.name }}</li>
+                        <li class="list-group-item">{{ adresse.address_1 }}</li>
+                        {% if adresse.address_2 %}
+                        <li class="list-group-item">{{ adresse.address_2 }}</li>
+                        {% endif %}
+                        <li class="list-group-item">{{ adresse.zip_code }} - {{ default_adresse.city }}</li>
+                        <li class="list-group-item">{{ adresse.get_country_display }}</li>
+                    </ul>
+
+
+                </div>
+                {% endfor %}
+            </div>
+
+        </div>
+
+    </div>
+
+
+</div>
+{% endblock %}

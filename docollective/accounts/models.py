@@ -1,3 +1,4 @@
+import iso3166
 from django.db import models
 from django.contrib.auth.models import AbstractUser, BaseUserManager
 
@@ -28,3 +29,25 @@ class ExChanger(AbstractUser):
     USERNAME_FIELD = "email"
 
     objects = ExChangerManager()
+
+    # Règle : 5 adresses maximum par utilisateur
+    @property
+    def number_adresses(self):
+        number_adresses = ExChangerAdresses.objects.filter(user=self).count()
+        return number_adresses
+
+
+class ExChangerAdresses(models.Model):
+    user: ExChanger = models.ForeignKey(to=ExChanger, on_delete=models.CASCADE, verbose_name="Utilisateur",
+                                        related_name="adresses")
+    name = models.CharField(max_length=200, verbose_name="Nom de l'adresse")
+    address_1 = models.CharField(max_length=1024, help_text="Voirie, numéro de rue", verbose_name="Adresse 1")
+    address_2 = models.CharField(max_length=1024, help_text="Bât, étage, lieu-dit", verbose_name="Adresse 2",
+                                 blank=True)
+    city = models.CharField(max_length=1024, verbose_name="Commune")
+    zip_code = models.CharField(max_length=32, verbose_name="Code Postal")
+    country = models.CharField(max_length=2, choices=[(c.alpha2.lower(), c.name) for c in iso3166.countries])
+    default = models.BooleanField(default=False, verbose_name="Défaut")
+
+    def __str__(self):
+        return f"{self.user} - {self.name}"
