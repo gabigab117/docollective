@@ -1,4 +1,5 @@
 from django.contrib.auth.views import LoginView
+from django.contrib.auth import logout
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 
@@ -21,3 +22,8 @@ def signup(request):
 class ExChangerLogin(LoginView):
     template_name = "accounts/login.html"
     next_page = reverse_lazy("index")
+
+
+def exchanger_logout(request):
+    logout(request)
+    return redirect("index")
