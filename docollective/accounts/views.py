@@ -39,3 +39,17 @@ def exchanger_profile(request):
     return render(request, "accounts/profile.html", context={"user": user,
                                                              "default_adresse": default_adresse,
                                                              "adresses": adresses})
+
+
+def default_address_view(request, pk):
+    user = request.user
+
+    current_address = user.adresses.get(user=user, default=True)
+    current_address.default = False
+    current_address.save()
+
+    new_address = user.adresses.get(pk=pk)
+    new_address.default = True
+    new_address.save()
+
+    return redirect("accounts:profile")

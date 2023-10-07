@@ -94,6 +94,13 @@
                         <li class="list-group-item">{{ adresse.get_country_display }}</li>
                     </ul>
 
+                    <form action="{% url 'accounts:default_address' pk=adresse.pk %}" method="post">
+
+                        {% csrf_token %}
+                        <input type="submit" value="Définir" class="btn btn-outline-info">
+
+                    </form>
+
 
                 </div>
                 {% endfor %}
