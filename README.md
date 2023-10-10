@@ -4,3 +4,6 @@
 - Apps accounts et shop
 - modèles
 - limiter à 5 adresses
+
+# Reprendre
+- Création de la vue de détail

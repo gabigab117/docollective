@@ -48,7 +48,7 @@ class Garment(models.Model):
 
     @property
     def garment_year(self):
-        return self.year if self.year else "NC"
+        return self.year or "NC"
 
 
 class Color(models.Model):
