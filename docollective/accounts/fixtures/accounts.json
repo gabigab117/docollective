@@ -1,0 +1,80 @@
+[
+  {
+    "model": "accounts.exchanger",
+    "pk": 1,
+    "fields": {
+      "password": "pbkdf2_sha256$600000$6tr2uPCeIQn2BKuUc7kFm5$THm30kElUy4uzLdumbS2oMrtGqAOM9VziYQRjbt5u2Q=",
+      "last_login": "2023-10-09T19:50:39.542Z",
+      "is_superuser": true,
+      "username": "gabigab117",
+      "first_name": "Gabriel",
+      "last_name": "Trouv�",
+      "is_staff": true,
+      "is_active": true,
+      "date_joined": "2023-10-03T20:15:02.574Z",
+      "email": "gabrieltrouve5@gmail.com",
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "accounts.exchanger",
+    "pk": 9,
+    "fields": {
+      "password": "pbkdf2_sha256$600000$c1ujKOgevPrATXfJYOqsG6$x8zQXuLE+uFfLrjbE7Ugyp9p9BLoEm4aeqjulGv3aew=",
+      "last_login": "2023-10-03T23:14:16.253Z",
+      "is_superuser": false,
+      "username": "test",
+      "first_name": "Mairie ons en bray",
+      "last_name": "Mairie ons en bray",
+      "is_staff": false,
+      "is_active": true,
+      "date_joined": "2023-10-03T23:13:51.787Z",
+      "email": "gabrieltrouve5@outlook.com",
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "accounts.exchangeradresses",
+    "pk": 1,
+    "fields": {
+      "user": 1,
+      "name": "Maison",
+      "address_1": "5 rue du pr�  �",
+      "address_2": "",
+      "city": "ONS EN BRAY",
+      "zip_code": "60650",
+      "country": "fr",
+      "default": true
+    }
+  },
+  {
+    "model": "accounts.exchangeradresses",
+    "pk": 2,
+    "fields": {
+      "user": 1,
+      "name": "test",
+      "address_1": "22 place de l'�glise",
+      "address_2": "",
+      "city": "Ons en Bray",
+      "zip_code": "60650",
+      "country": "fr",
+      "default": false
+    }
+  },
+  {
+    "model": "accounts.exchangeradresses",
+    "pk": 3,
+    "fields": {
+      "user": 1,
+      "name": "test 2",
+      "address_1": "772 route des solons",
+      "address_2": "",
+      "city": "ONS EN BRAY",
+      "zip_code": "60650",
+      "country": "fr",
+      "default": false
+    }
+  }
+]

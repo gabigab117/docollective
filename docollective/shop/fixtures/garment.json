@@ -1,0 +1,102 @@
+[
+  {
+    "model": "shop.garment",
+    "pk": 1,
+    "fields": {
+      "description": "Pantalon noir",
+      "user": 1,
+      "price": 20,
+      "size": "36",
+      "color": 9,
+      "year": "2021",
+      "category": "pa",
+      "state": "tb",
+      "type": "f",
+      "pics_1": "gabigab117/pant_noir.webp",
+      "pics_2": "",
+      "pics_3": "",
+      "purchased": false,
+      "buyer": null
+    }
+  },
+  {
+    "model": "shop.garment",
+    "pk": 2,
+    "fields": {
+      "description": "Pull rouge",
+      "user": 9,
+      "price": 45,
+      "size": "47",
+      "color": 13,
+      "year": "2019",
+      "category": "ha",
+      "state": "cn",
+      "type": "f",
+      "pics_1": "test/pyll_rouge.webp",
+      "pics_2": "",
+      "pics_3": "",
+      "purchased": false,
+      "buyer": null
+    }
+  },
+  {
+    "model": "shop.garment",
+    "pk": 3,
+    "fields": {
+      "description": "Pull jaune",
+      "user": 1,
+      "price": 15,
+      "size": "54",
+      "color": 6,
+      "year": "",
+      "category": "ha",
+      "state": "tb",
+      "type": "h",
+      "pics_1": "gabigab117/pulljaune.webp",
+      "pics_2": "",
+      "pics_3": "",
+      "purchased": false,
+      "buyer": null
+    }
+  },
+  {
+    "model": "shop.garment",
+    "pk": 4,
+    "fields": {
+      "description": "Pantalon beige",
+      "user": 9,
+      "price": 56,
+      "size": "52",
+      "color": 10,
+      "year": "2022",
+      "category": "pa",
+      "state": "tb",
+      "type": "h",
+      "pics_1": "test/pant_beige.jpg",
+      "pics_2": "",
+      "pics_3": "",
+      "purchased": false,
+      "buyer": null
+    }
+  },
+  {
+    "model": "shop.garment",
+    "pk": 5,
+    "fields": {
+      "description": "Chaussures noires cool",
+      "user": 1,
+      "price": 56,
+      "size": "38",
+      "color": 9,
+      "year": "2018",
+      "category": "ch",
+      "state": "tb",
+      "type": "h",
+      "pics_1": "gabigab117/richelieu-cuir-chaussure-homme-femme-noir.webp",
+      "pics_2": "",
+      "pics_3": "",
+      "purchased": false,
+      "buyer": null
+    }
+  }
+]

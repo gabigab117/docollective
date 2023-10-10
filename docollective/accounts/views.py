@@ -1,6 +1,7 @@
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.views import LoginView
 from django.contrib.auth import logout
+from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 
@@ -44,12 +45,22 @@ def exchanger_profile(request):
 def default_address_view(request, pk):
     user = request.user
 
-    current_address = user.adresses.get(user=user, default=True)
-    current_address.default = False
-    current_address.save()
+    # current_address = user.adresses.get(user=user, default=True)
+    # current_address.default = False
+    # current_address.save()
+    #
+    # new_address = user.adresses.get(pk=pk)
+    # new_address.default = True
+    # new_address.save()
+    # Mettre à jour l'adresse actuelle par défaut
+    user.adresses.filter(default=True).update(default=False)
 
-    new_address = user.adresses.get(pk=pk)
-    new_address.default = True
-    new_address.save()
+    # Définir la nouvelle adresse comme adresse par défaut
+    updated_rows = user.adresses.filter(pk=pk).update(default=True)
+
+    # Vérifier si l'adresse avec `pk=pk` a été mise à jour
+    if not updated_rows:
+        # Gérer l'erreur ici, par exemple en retournant une réponse d'erreur
+        return HttpResponse("Adresse non trouvée", status=404)
 
     return redirect("accounts:profile")
