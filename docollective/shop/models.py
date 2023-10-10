@@ -1,5 +1,7 @@
 from django.db import models
 from django.utils import timezone
+from django.utils.text import slugify
+
 from docollective.settings import AUTH_USER_MODEL
 
 SIZES = [(str(i), str(i)) for i in range(16, 71)]
@@ -15,6 +17,7 @@ def user_directory_path(instance, filename):
 
 class Garment(models.Model):
     description = models.CharField(max_length=50, verbose_name="Description")
+    slug = models.SlugField(unique=True, blank=True)
     user = models.ForeignKey(to=AUTH_USER_MODEL, verbose_name="Utilisateur", on_delete=models.CASCADE,
                              related_name="garments")
     price = models.IntegerField(verbose_name="Prix d'achat")
@@ -30,12 +33,18 @@ class Garment(models.Model):
     purchased = models.BooleanField(default=False, verbose_name="Acheté")
     buyer = models.ForeignKey(to=AUTH_USER_MODEL, verbose_name="Acheteur", on_delete=models.CASCADE, null=True,
                               blank=True)
+    published = models.DateTimeField(verbose_name="Date de publication", auto_now_add=True)
 
     class Meta:
         verbose_name = "Vêtement"
 
     def __str__(self):
         return f"{self.user} - {self.get_category_display()} - {self.description}"
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.description)
+        super().save(*args, **kwargs)
 
     @property
     def garment_year(self):
