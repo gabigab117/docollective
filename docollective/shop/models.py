@@ -1,3 +1,4 @@
+import uuid
 from django.db import models
 from django.urls import reverse
 from django.utils import timezone
@@ -18,6 +19,7 @@ def user_directory_path(instance, filename):
 
 class Garment(models.Model):
     description = models.CharField(max_length=50, verbose_name="Description")
+    reference = models.UUIDField(verbose_name="Référence", blank=True, default=uuid.uuid4, editable=True)
     slug = models.SlugField(unique=True, blank=True)
     user = models.ForeignKey(to=AUTH_USER_MODEL, verbose_name="Utilisateur", on_delete=models.CASCADE,
                              related_name="garments")
