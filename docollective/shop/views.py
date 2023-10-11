@@ -4,7 +4,9 @@ from .models import Garment
 
 def index(request):
     # afficher les dernières publications
-    garments: Garment = Garment.objects.filter(purchased=False).order_by("-published")
+    count_garment = Garment.objects.filter(purchased=False).count()
+    # [plus ancien en partant du dernier-3:plus récent][inverser]
+    garments: Garment = Garment.objects.filter(purchased=False)[count_garment-3:count_garment][::-1]
     return render(request, "shop/index.html", context={"garments": garments})
 
 
