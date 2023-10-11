@@ -72,3 +72,15 @@ class Color(models.Model):
 
     class Meta:
         verbose_name = "Couleur"
+
+
+class Cart(models.Model):
+    user = models.OneToOneField(to=AUTH_USER_MODEL, on_delete=models.CASCADE, verbose_name="Utilisateur")
+    garments = models.ManyToManyField(to=Garment, verbose_name="Vêtements")
+    creation_date = models.DateTimeField(auto_now_add=True, verbose_name="Date de création")
+
+    class Meta:
+        verbose_name = "Panier"
+
+    def __str__(self):
+        return f"{self.user} - {self.creation_date}"

@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 
-{% block title %}{{ garment.description }}{% endblock %}
+{% block title %}Panier{% endblock %}
 
 
 {% block body %}
@@ -9,15 +9,16 @@
 
     <div class="col mb-5">
         <div class="text-center">
-            <h2>{{ garment.description }}</h2>
-            Vendu par <b>{{ garment.user.username }}</b>
+            <h2>Panier de {{ request.user }}</h2>
+
 
         </div>
     </div>
 </div>
 
 <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
-
+    {% if garments %}
+{% for garment in garments %}
     <div class="col mb-5">
         <div class="card h-100">
             <!-- Product image-->
@@ -40,37 +41,19 @@
             </div>
             <!-- Product actions-->
             <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                <div class="text-center">
-                    <form method="post" action="{% url 'shop:add-to-cart' slug=garment.slug %}">
-                        {% csrf_token %}
-                        <input type="submit" value="Echanger" class="btn btn-outline-dark mt-auto">
 
-                    </form>
-
-                </div>
 
             </div>
         </div>
     </div>
 
-
-</div>
-
-<div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
-
-    <div class="col mb-5">
-        <div class="text-center">
-            Réf annonce : {{ garment.reference }}
-
-            {% if messages %}
-
-    {% for message in messages %}
-<h5 style="color: red;">{{ message }}</h5>
-    {% endfor %}
-
-{% endif %}
-        </div>
+{% endfor %}
+    {% else %}
+     <div class="col mb-5">
+       <h3>Votre panier est vide</h3>
     </div>
+    {% endif %}
 </div>
+
 
 {% endblock %}

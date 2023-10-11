@@ -73,11 +73,15 @@
                 {% endif %}
             </ul>
             <form class="d-flex">
-                <button class="btn btn-outline-dark" type="submit">
+                <a href="{% url 'shop:cart' %}" class="btn btn-outline-dark">
                     <i class="bi-cart-fill me-1"></i>
-                    Cart
+                    Panier
+                    {% if request.user.cart %}
+                    <span class="badge bg-dark text-white ms-1 rounded-pill">{{ request.user.cart.garments.all.count }}</span>
+                    {% else %}
                     <span class="badge bg-dark text-white ms-1 rounded-pill">0</span>
-                </button>
+                    {% endif %}
+                </a>
             </form>
         </div>
     </div>
