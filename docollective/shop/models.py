@@ -1,4 +1,5 @@
 from django.db import models
+from django.urls import reverse
 from django.utils import timezone
 from django.utils.text import slugify
 
@@ -45,6 +46,10 @@ class Garment(models.Model):
         if not self.slug:
             self.slug = slugify(self.description)
         super().save(*args, **kwargs)
+
+    def get_absolute_url(self):
+        # https://docs.djangoproject.com/fr/4.2/ref/models/instances/#get-absolute-url
+        return reverse(viewname="shop:detail", kwargs={"slug": self.slug})
 
     @property
     def garment_year(self):

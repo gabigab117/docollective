@@ -10,4 +10,4 @@ def index(request):
 
 def detail_view(request, slug):
     garment: Garment = get_object_or_404(klass=Garment, slug=slug)
-    return render(request, "shop/garment.html", context={})
+    return render(request, "shop/garment.html", context={"garment": garment})
