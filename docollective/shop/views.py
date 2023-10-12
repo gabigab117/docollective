@@ -3,7 +3,8 @@ from django.contrib.auth.decorators import login_required
 from django.core.exceptions import ObjectDoesNotExist
 from django.shortcuts import render, get_object_or_404, redirect
 from django.views.decorators.http import require_POST
-from .models import Garment, Cart
+from django.forms import modelformset_factory
+from .models import Garment, Cart, Order
 
 
 def index(request):
@@ -14,31 +15,32 @@ def index(request):
     return render(request, "shop/index.html", context={"garments": garments})
 
 
-def detail_view(request, slug):
-    garment: Garment = get_object_or_404(klass=Garment, slug=slug)
+def detail_view(request, slug, pk):
+    garment: Garment = get_object_or_404(klass=Garment, slug=slug, pk=pk)
     return render(request, "shop/garment.html", context={"garment": garment})
 
 
 @require_POST
-def add_to_cart(request, slug):
+def add_to_cart(request, pk):
     user = request.user
 
-    garment = get_object_or_404(klass=Garment, slug=slug)
+    garment = get_object_or_404(klass=Garment, pk=pk)
     cart, _ = Cart.objects.get_or_create(user=user)
 
     # Vérifier d'abord si dans le panier de l'utilisateur avec message
-    if cart.garments.filter(id=garment.id).exists():
+    if cart.orders.filter(garment__id=garment.id).exists():
         messages.add_message(request, messages.WARNING, f"{garment.description} est déjà dans votre panier")
         return redirect(garment)
 
     # Vérifier sinon si dans un panier tout court avec message (mais différent que le précédent)
-    elif Cart.objects.filter(garments__id=garment.id).exists():
+    elif Cart.objects.filter(orders__garment__id=garment.id).exists():
         messages.add_message(request, messages.WARNING, f"{garment.description} est déjà dans un panier")
         return redirect(garment)
 
     # Sinon ajouter au panier
     else:
-        cart.garments.add(garment)
+        order = Order.objects.create(user=user, garment=garment)
+        cart.orders.add(order)
         return redirect("shop:cart")
 
 
@@ -47,8 +49,8 @@ def cart_view(request):
     user = request.user
 
     try:
-        garments = user.cart.garments.all()
+        orders = user.cart.orders.all()
     except ObjectDoesNotExist:
-        garments = None
+        orders = None
 
-    return render(request, "shop/cart.html", context={"garments": garments})
+    return render(request, "shop/cart.html", context={"orders": orders})

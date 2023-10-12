@@ -20,7 +20,7 @@ def user_directory_path(instance, filename):
 class Garment(models.Model):
     description = models.CharField(max_length=50, verbose_name="Description")
     reference = models.UUIDField(verbose_name="Référence", blank=True, default=uuid.uuid4, editable=True)
-    slug = models.SlugField(unique=True, blank=True)
+    slug = models.SlugField(blank=True)
     user = models.ForeignKey(to=AUTH_USER_MODEL, verbose_name="Utilisateur", on_delete=models.CASCADE,
                              related_name="garments")
     price = models.IntegerField(verbose_name="Prix d'achat")
@@ -51,7 +51,7 @@ class Garment(models.Model):
 
     def get_absolute_url(self):
         # https://docs.djangoproject.com/fr/4.2/ref/models/instances/#get-absolute-url
-        return reverse(viewname="shop:detail", kwargs={"slug": self.slug})
+        return reverse(viewname="shop:detail", kwargs={"slug": self.slug, "pk": self.pk})
 
     @property
     def garment_year(self):
@@ -74,9 +74,23 @@ class Color(models.Model):
         verbose_name = "Couleur"
 
 
+class Order(models.Model):
+    user = models.ForeignKey(to=AUTH_USER_MODEL, on_delete=models.CASCADE, verbose_name="Utilisateur")
+    garment = models.ForeignKey(to=Garment, on_delete=models.SET_NULL, null=True, verbose_name="Vêtements")
+    reference = models.UUIDField(default=uuid.uuid4, editable=True, verbose_name="Référence")
+    ordered = models.BooleanField(default=False, verbose_name="Acquitté")
+    ordered_date = models.DateTimeField(blank=True, null=True)
+
+    class Meta:
+        verbose_name = "Commande"
+
+    def __str__(self):
+        return f"{self.user} - {self.garment} - {self.ordered_date}"
+
+
 class Cart(models.Model):
     user = models.OneToOneField(to=AUTH_USER_MODEL, on_delete=models.CASCADE, verbose_name="Utilisateur")
-    garments = models.ManyToManyField(to=Garment, verbose_name="Vêtements")
+    orders = models.ManyToManyField(to=Order, verbose_name="Vêtements")
     creation_date = models.DateTimeField(auto_now_add=True, verbose_name="Date de création")
 
     class Meta:

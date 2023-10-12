@@ -17,26 +17,26 @@
 </div>
 
 <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
-    {% if garments %}
-{% for garment in garments %}
+    {% if orders %}
+{% for order in orders %}
     <div class="col mb-5">
         <div class="card h-100">
             <!-- Product image-->
-            <img class="card-img-top" src="{{ garment.pics_1.url }}"/>
+            <img class="card-img-top" src="{{ order.garment.pics_1.url }}"/>
             <!-- Product details-->
             <div class="card-body p-4">
                 <div class="text-center">
                     <!-- Product name-->
-                    <h5 class="fw-bolder">{{ garment.description }}</h5>
+                    <h5 class="fw-bolder">{{ order.garment.description }}</h5>
                     <!-- Product price-->
-                    {{ garment.price }} € <br>
+                    {{ order.garment.price }} € <br>
 
                     <!-- Product state-->
-                    {{ garment.get_state_display }} <br>
+                    {{ order.garment.get_state_display }} <br>
                     <!-- Product size-->
-                    Taille {{ garment.size }}<br>
+                    Taille {{ order.garment.size }}<br>
                     <!-- Product year-->
-                    Année {{ garment.garment_year }}
+                    Année {{ order.garment.year }}
                 </div>
             </div>
             <!-- Product actions-->
