@@ -18,7 +18,7 @@ def user_directory_path(instance, filename):
 
 
 class Garment(models.Model):
-    description = models.CharField(max_length=50, verbose_name="Description")
+    description = models.CharField(max_length=50, verbose_name="Description", help_text="50 caractères max")
     reference = models.UUIDField(verbose_name="Référence", blank=True, default=uuid.uuid4, editable=True)
     slug = models.SlugField(blank=True)
     user = models.ForeignKey(to=AUTH_USER_MODEL, verbose_name="Utilisateur", on_delete=models.CASCADE,
@@ -33,10 +33,8 @@ class Garment(models.Model):
     pics_1 = models.ImageField(verbose_name="Photo 1", upload_to=user_directory_path)
     pics_2 = models.ImageField(verbose_name="Photo 2", blank=True, null=True, upload_to=user_directory_path)
     pics_3 = models.ImageField(verbose_name="Photo 3", blank=True, null=True, upload_to=user_directory_path)
-    purchased = models.BooleanField(default=False, verbose_name="Acheté")
-    buyer = models.ForeignKey(to=AUTH_USER_MODEL, verbose_name="Acheteur", on_delete=models.CASCADE, null=True,
-                              blank=True)
     published = models.DateTimeField(verbose_name="Date de publication", auto_now_add=True)
+    activate = models.BooleanField(default=False, verbose_name="Activé")
 
     class Meta:
         verbose_name = "Vêtement"

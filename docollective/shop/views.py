@@ -2,17 +2,20 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import ObjectDoesNotExist
 from django.shortcuts import render, get_object_or_404, redirect
+from django.urls import reverse_lazy
 from django.views.decorators.http import require_POST
 from django.forms import modelformset_factory
+from django.views.generic import CreateView
+from django.contrib.auth.mixins import LoginRequiredMixin
 from .models import Garment, Cart, Order
 from .forms import OrderForm
 
 
 def index(request):
     # afficher les dernières publications
-    count_garment = Garment.objects.filter(purchased=False).count()
+    count_garment = Garment.objects.filter(activate=True).count()
     # [plus ancien en partant du dernier-3:plus récent][inverser]
-    garments: Garment = Garment.objects.filter(purchased=False)[count_garment-3:count_garment:-1]
+    garments: Garment = Garment.objects.filter(activate=True)[count_garment-3:count_garment:-1]
     return render(request, "shop/index.html", context={"garments": garments})
 
 
@@ -75,3 +78,15 @@ def delete_garments(request):
 def delete_cart(request):
     request.user.cart.delete()
     return redirect("index")
+
+
+class CreateGarment(LoginRequiredMixin, CreateView):
+    model = Garment
+    template_name = "shop/create-garment.html"
+    success_url = reverse_lazy("index")
+    fields = ["description", "price", "size", "color", "year", "category", "state", "type", "pics_1",
+              "pics_2", "pics_3"]
+
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        return super().form_valid(form)
