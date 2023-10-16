@@ -17,42 +17,50 @@
 </div>
 
 <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
-    {% if orders %}
-{% for order in orders %}
-    <div class="col mb-5">
-        <div class="card h-100">
-            <!-- Product image-->
-            <img class="card-img-top" src="{{ order.garment.pics_1.url }}"/>
-            <!-- Product details-->
-            <div class="card-body p-4">
-                <div class="text-center">
-                    <!-- Product name-->
-                    <h5 class="fw-bolder">{{ order.garment.description }}</h5>
-                    <!-- Product price-->
-                    {{ order.garment.price }} € <br>
+{% if request.user.cart %}
 
-                    <!-- Product state-->
-                    {{ order.garment.get_state_display }} <br>
-                    <!-- Product size-->
-                    Taille {{ order.garment.size }}<br>
-                    <!-- Product year-->
-                    Année {{ order.garment.year }}
+    <form method="POST" action="{% url 'shop:delete-garments' %}">
+        {% csrf_token %}
+        {{ forms.management_form }}
+        {% for form in forms %}
+        <div class="col mb-5">
+            <div class="card h-100">
+                <!-- Product image-->
+                <img class="card-img-top" src="{{ form.instance.garment.pics_1.url }}"/>
+                <!-- Product details-->
+                <div class="card-body p-4">
+                    <div class="text-center">
+                        <!-- Product name-->
+                        <h5 class="fw-bolder">{{ form.instance.garment.description }}</h5>
+                        <!-- Product price-->
+                        {{ form.instance.garment.price }} € <br>
+
+                        <!-- Product state-->
+                        {{ form.instance.garment.get_state_display }} <br>
+                        <!-- Product size-->
+                        Taille {{ form.instance.garment.size }}<br>
+                        <!-- Product year-->
+                        Année {{ form.instance.garment.year }}
+                    </div>
+                </div>
+                <!-- Product actions-->
+                <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+
+                    {{ form.as_p }}
                 </div>
             </div>
-            <!-- Product actions-->
-            <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-
-
-            </div>
         </div>
-    </div>
 
-{% endfor %}
-    {% else %}
-     <div class="col mb-5">
-       <h3>Votre panier est vide</h3>
+        {% endfor %}
+        <button type="submit">Supprimer du panier</button>
+    </form>
+{% else %}
+    <div class="col mb-5">
+        <h3>Votre panier est vide</h3>
+
     </div>
     {% endif %}
+
 </div>
 
 

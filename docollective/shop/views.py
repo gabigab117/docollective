@@ -5,6 +5,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.views.decorators.http import require_POST
 from django.forms import modelformset_factory
 from .models import Garment, Cart, Order
+from .forms import OrderForm
 
 
 def index(request):
@@ -49,8 +50,24 @@ def cart_view(request):
     user = request.user
 
     try:
-        orders = user.cart.orders.all()
+        orders = user.cart.orders.filter(ordered=False)
     except ObjectDoesNotExist:
         orders = None
 
-    return render(request, "shop/cart.html", context={"orders": orders})
+    OrderFormSet = modelformset_factory(Order, form=OrderForm, extra=0)
+    formset = OrderFormSet(queryset=orders)
+
+    return render(request, "shop/cart.html", context={"forms": formset})
+
+
+@require_POST
+def delete_garments(request):
+    user = request.user
+    OrderFormSet = modelformset_factory(Order, form=OrderForm, extra=0)
+    formset = OrderFormSet(request.POST, queryset=user.cart.orders.filter(ordered=False))
+    print("Avant valide")
+    print(formset.errors)
+    if formset.is_valid():
+        print("Valide ! Ouiiiiiiii")
+        formset.save()
+    return redirect("shop:cart")
