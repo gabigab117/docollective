@@ -17,7 +17,7 @@
 </div>
 
 <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
-{% if request.user.cart %}
+    {% if request.user.cart %}
 
     <form method="POST" action="{% url 'shop:delete-garments' %}">
         {% csrf_token %}
@@ -54,7 +54,14 @@
         {% endfor %}
         <button type="submit">Supprimer du panier</button>
     </form>
-{% else %}
+
+    <form action="{% url 'shop:delete-cart' %}" method="post">
+    {% csrf_token %}
+        <button type="submit" class="btn btn-outline-danger">Supprimer le panier</button>
+
+    </form>
+
+    {% else %}
     <div class="col mb-5">
         <h3>Votre panier est vide</h3>
 

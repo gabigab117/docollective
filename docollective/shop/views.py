@@ -65,9 +65,13 @@ def delete_garments(request):
     user = request.user
     OrderFormSet = modelformset_factory(Order, form=OrderForm, extra=0)
     formset = OrderFormSet(request.POST, queryset=user.cart.orders.filter(ordered=False))
-    print("Avant valide")
-    print(formset.errors)
+
     if formset.is_valid():
-        print("Valide ! Ouiiiiiiii")
         formset.save()
     return redirect("shop:cart")
+
+
+@require_POST
+def delete_cart(request):
+    request.user.cart.delete()
+    return redirect("index")
