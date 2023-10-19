@@ -23,11 +23,17 @@ def index(request):
 def all_garments(request):
     garments = Garment.objects.filter(activate=True)
 
+    categories = set([(garment.get_category_display(), garment.category) for garment in garments])
+
     search = request.GET.get("search")
     if search:
         garments = Garment.objects.filter(Q(description__icontains=search) | Q(color__name__icontains=search))
 
-    return render(request, "shop/all.html", context={"garments": garments})
+    redirection = request.GET.get("redirect")
+    if redirection:
+        garments = Garment.objects.filter(category=redirection)
+
+    return render(request, "shop/all.html", context={"garments": garments, "categories": categories})
 
 
 def detail_view(request, slug, pk):
