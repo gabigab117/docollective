@@ -19,6 +19,12 @@ def index(request):
     return render(request, "shop/index.html", context={"garments": garments})
 
 
+def all_garments(request):
+    garments = Garment.objects.filter(activate=True)
+
+    return render(request, "shop/all.html", context={"garments": garments})
+
+
 def detail_view(request, slug, pk):
     garment: Garment = get_object_or_404(klass=Garment, slug=slug, pk=pk)
     return render(request, "shop/garment.html", context={"garment": garment})

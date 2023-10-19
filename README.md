@@ -3,7 +3,8 @@
 
 # Tâches
 - limiter à 5 adresses
-- formset factory
+- vue all avec filtres
+- vue favoris
 - l'échange en lui mm
 - et passer en commandé avec espace client
 - Des tests !
