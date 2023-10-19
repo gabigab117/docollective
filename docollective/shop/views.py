@@ -1,4 +1,5 @@
 from django.contrib import messages
+from django.db.models import Q
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import ObjectDoesNotExist
 from django.shortcuts import render, get_object_or_404, redirect
@@ -21,6 +22,10 @@ def index(request):
 
 def all_garments(request):
     garments = Garment.objects.filter(activate=True)
+
+    search = request.GET.get("search")
+    if search:
+        garments = Garment.objects.filter(Q(description__icontains=search) | Q(color__name__icontains=search))
 
     return render(request, "shop/all.html", context={"garments": garments})
 
