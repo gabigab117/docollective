@@ -23,7 +23,7 @@
 <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center mb-5">
 
     {% for name, db_name in categories %}
-    <a href="{% url 'shop:all' %}?redirect={{ db_name }}" class="btn btn-outline-primary">{{ name }}</a>
+    <a href="{% url 'shop:all' %}?category={{ db_name }}" class="btn btn-outline-primary">{{ name }}</a>
     {% endfor %}
 
 </div>

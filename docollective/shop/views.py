@@ -29,7 +29,7 @@ def all_garments(request):
     if search:
         garments = Garment.objects.filter(Q(description__icontains=search) | Q(color__name__icontains=search))
 
-    redirection = request.GET.get("redirect")
+    redirection = request.GET.get("category")
     if redirection:
         garments = Garment.objects.filter(category=redirection)
 
