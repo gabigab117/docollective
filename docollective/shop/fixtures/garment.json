@@ -17,16 +17,15 @@
       "pics_1": "gabigab117/richelieu-cuir-chaussure-homme-femme-noir.webp",
       "pics_2": "",
       "pics_3": "",
-      "purchased": false,
-      "buyer": null,
-      "published": "2023-10-11T20:23:11.777Z"
+      "published": "2023-10-11T20:23:11.777Z",
+      "activate": true
     }
   },
   {
     "model": "shop.garment",
     "pk": 7,
     "fields": {
-      "description": "Pantalon noir",
+      "description": "Pantalon",
       "reference": "9da03fe4-405a-421f-b440-25618d83f292",
       "slug": "pantalon-noir",
       "user": 9,
@@ -40,9 +39,8 @@
       "pics_1": "test/pant_noir.webp",
       "pics_2": "",
       "pics_3": "",
-      "purchased": false,
-      "buyer": null,
-      "published": "2023-10-11T20:24:02.425Z"
+      "published": "2023-10-11T20:24:02.425Z",
+      "activate": true
     }
   },
   {
@@ -63,9 +61,8 @@
       "pics_1": "gabigab117/pant_beige.jpg",
       "pics_2": "",
       "pics_3": "",
-      "purchased": false,
-      "buyer": null,
-      "published": "2023-10-11T20:25:37.618Z"
+      "published": "2023-10-11T20:25:37.618Z",
+      "activate": true
     }
   },
   {
@@ -86,9 +83,8 @@
       "pics_1": "test/pyll_rouge.webp",
       "pics_2": "",
       "pics_3": "",
-      "purchased": false,
-      "buyer": null,
-      "published": "2023-10-11T20:26:26.095Z"
+      "published": "2023-10-11T20:26:26.095Z",
+      "activate": true
     }
   },
   {
@@ -109,9 +105,30 @@
       "pics_1": "gabigab117/pulljaune.webp",
       "pics_2": "",
       "pics_3": "",
-      "purchased": false,
-      "buyer": null,
-      "published": "2023-10-11T20:27:00.919Z"
+      "published": "2023-10-11T20:27:00.919Z",
+      "activate": true
+    }
+  },
+  {
+    "model": "shop.garment",
+    "pk": 11,
+    "fields": {
+      "description": "Chaussures roses",
+      "reference": "20d1b3dd-955c-453a-acb2-b16a6ac52b59",
+      "slug": "chaussures-roses",
+      "user": 1,
+      "price": 60,
+      "size": "36",
+      "color": 12,
+      "year": "1988",
+      "category": "ch",
+      "state": "tb",
+      "type": "f",
+      "pics_1": "gabigab117/sandales-sexy-roses-vernies-talon-plateforme-kiss-209.jpg",
+      "pics_2": "",
+      "pics_3": "",
+      "published": "2023-10-18T22:19:15.317Z",
+      "activate": true
     }
   }
 ]

@@ -15,8 +15,11 @@ from .forms import OrderForm
 def index(request):
     # afficher les dernières publications
     count_garment = Garment.objects.filter(activate=True).count()
-    # [plus ancien en partant du dernier-3:plus récent][inverser]
-    garments: Garment = Garment.objects.filter(activate=True)[count_garment-3:count_garment:-1]
+    if count_garment < 3:
+        garments: Garment = Garment.objects.filter(activate=True)
+    else:
+        # [plus ancien en partant du dernier-3:plus récent][inverser]
+        garments: Garment = Garment.objects.filter(activate=True)[count_garment-3:count_garment:-1]
     return render(request, "shop/index.html", context={"garments": garments})
 
 
