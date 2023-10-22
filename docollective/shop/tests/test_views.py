@@ -65,6 +65,9 @@ class TestView(TestCase):
 
         self.assertEquals(response.status_code, 302)
         self.assertEquals(Garment.objects.get(description="Chaussette").description, "Chaussette")
+
         # Nettoyer le dossier Test
         documents = pathlib.Path(BASE_DIR / "mediafiles/test_gabigab")
         shutil.rmtree(documents)
+
+        # Delete View https://youtu.be/hA_VxnxCHbo?si=iVpr_98f3JomVTET 12 minutes
