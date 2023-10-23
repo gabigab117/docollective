@@ -6,7 +6,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse_lazy
 from django.views.decorators.http import require_POST
 from django.forms import modelformset_factory
-from django.views.generic import CreateView
+from django.views.generic import CreateView, DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from .models import Garment, Cart, Order
 from .forms import OrderForm
@@ -112,7 +112,7 @@ class CreateGarment(LoginRequiredMixin, CreateView):
         return super().form_valid(form)
 
 
-def order_history(request):
-    user = request.user
-
-    return render(request, "shop/order-history.html")
+class DeleteGarment(DeleteView):
+    model = Garment
+    success_url = reverse_lazy("index")
+    template_name = "shop/delete-garment.html"

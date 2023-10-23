@@ -32,3 +32,8 @@ dans ce que tu as quelque chose qui l'intéresse également, et il peut y avoir 
 - Soit tu fais un truc plus général, et tu peux juste faire un modèle comme les bibliothèques gratuites dans les rues, du
 style prend un livre, donne un livre. Donc là ça serait, tu peux récupérer un vêtement / item seulement si tu en donnes
 un en échange
+
+### 1er cas
+1 - 1, faire un match avec une personne
+### 2eme cas
+Envoyer son vêtement, une fois reçu on m'expédie celui commandé

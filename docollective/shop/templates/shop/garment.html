@@ -51,6 +51,9 @@
 
             </div>
         </div>
+        {% if request.user == garment.user %}
+        <a href="{% url 'shop:delete-garment' pk=garment.pk %}" class="btn btn-outline-danger">Supprimer l'annonce</a>
+        {% endif %}
     </div>
 
 

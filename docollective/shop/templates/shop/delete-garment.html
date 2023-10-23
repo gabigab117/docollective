@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %}Supprimer une annonce{% endblock %}
+
+
+{% block body %}
+
+<div class="row mb-5">
+    <h2 class="text-center">Supprimer l'annonce</h2>
+
+</div>
+
+<div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+
+
+    <div class="col mb-5">
+        <form method="post">
+            {% csrf_token %}
+            {{ form|crispy }}
+            <button type="submit" class="btn btn-primary">Supprimer</button>
+        </form>
+    </div>
+
+
+</div>
+
+{% endblock %}
