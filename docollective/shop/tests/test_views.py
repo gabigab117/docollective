@@ -83,4 +83,9 @@ class TestView(TestCase):
         self.assertRedirects(response, reverse("index"))
         self.assertEquals(Garment.objects.get(description="Chaussette").description, "Chaussette")
 
+    def test_create_garment_POST_no_login(self):
+        response = self.client.get(self.create_url)
+        self.assertEquals(response.status_code, 302)
+        self.assertRedirects(response, f"{reverse('accounts:login')}?next={reverse('shop:create')}")
+
         # Delete View https://youtu.be/hA_VxnxCHbo?si=iVpr_98f3JomVTET 12 minutes
