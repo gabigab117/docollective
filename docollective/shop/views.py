@@ -110,3 +110,9 @@ class CreateGarment(LoginRequiredMixin, CreateView):
     def form_valid(self, form):
         form.instance.user = self.request.user
         return super().form_valid(form)
+
+
+def order_history(request):
+    user = request.user
+
+    return render(request, "shop/order-history.html")

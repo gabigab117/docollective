@@ -4,11 +4,24 @@ from django.core.files.uploadedfile import SimpleUploadedFile
 from shop.models import Garment, Order, Cart, Color
 from accounts.models import ExChanger
 
-import pathlib
+import os
 import shutil
-from docollective.settings import BASE_DIR
+from PIL import Image
+from io import BytesIO
 
 import json
+
+
+def create_test_image():
+    image = Image.new('RGB', (100, 100), color='white')
+
+    image_file = BytesIO()
+    image.save(image_file, format="JPEG")
+    image_file.seek(0)
+
+    file_name = 'test_image.jpg'
+    uploaded_image = SimpleUploadedFile(name=file_name, content=image_file.getvalue(), content_type='image/jpeg')
+    return uploaded_image
 
 
 class TestView(TestCase):
@@ -29,6 +42,11 @@ class TestView(TestCase):
         self.garment_1: Garment = Garment.objects.create(description="slug", user=self.user1, price=10,
                                                          color=self.color1, year="1989", type="ho", activate=True,
                                                          pics_1="test/test.jpg")
+
+    def tearDown(self):
+        folder_path = "mediafiles/test_gabigab"
+        if os.path.exists(folder_path):
+            shutil.rmtree(folder_path)
 
     def test_index_GET(self):
         response = self.client.get(self.index_url)
@@ -58,16 +76,11 @@ class TestView(TestCase):
             "category": "ch",
             "state": "b",
             "type": "h",
-            "pics_1": SimpleUploadedFile(name="test.jpg",
-                                         content=open("mediafiles/gabigab117/pant_beige.jpg", "rb").read(),
-                                         content_type="image/jpeg")
+            "pics_1": create_test_image()
         })
 
         self.assertEquals(response.status_code, 302)
+        self.assertRedirects(response, reverse("index"))
         self.assertEquals(Garment.objects.get(description="Chaussette").description, "Chaussette")
-
-        # Nettoyer le dossier Test
-        documents = pathlib.Path(BASE_DIR / "mediafiles/test_gabigab")
-        shutil.rmtree(documents)
 
         # Delete View https://youtu.be/hA_VxnxCHbo?si=iVpr_98f3JomVTET 12 minutes
