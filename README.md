@@ -18,7 +18,7 @@ Une plateforme d'échange de vêtements.
 
 # Reprendre
 
-- RAS
+- Empêcher un delete quand un article est dans un panier
 
 # Notes
 
