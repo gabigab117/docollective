@@ -16,7 +16,7 @@ def signup(request):
         if form.is_valid():
             inactive_user = send_verification_email(request, form)
             return redirect("index")
-        # Sans le else j'a iun formulaire vide si pas valide
+        # Sans le else j'ai un formulaire vide si pas valide
     else:
         form = ExChangerSignupForm()
     return render(request, "accounts/signup.html", context={"form": form})

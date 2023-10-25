@@ -32,6 +32,7 @@ class TestView(TestCase):
         self.all_garments_url = reverse("shop:all")
         self.detail_url = reverse("shop:detail", args=["slug", 1])
         self.create_url = reverse("shop:create")
+        self.delete_url = reverse("shop:delete-garment", args=[1])
 
         self.color1 = Color.objects.create(name="Blanc", hexa="#FFFFFF")
 
@@ -39,9 +40,10 @@ class TestView(TestCase):
                                                    last_name="Gabriel", password="12345678")
         self.user2 = ExChanger.objects.create_user(email="gabi@gab.com", username="gabigab2", first_name="Trouvé2",
                                                    last_name="Gabriel2", password="12345678")
-        self.garment_1: Garment = Garment.objects.create(description="slug", user=self.user1, price=10,
-                                                         color=self.color1, year="1989", type="ho", activate=True,
-                                                         pics_1="test/test.jpg")
+        self.garment_1: Garment = Garment.objects.create(description="slug", user=self.user1, price=10, size=42,
+                                                         color=self.color1, year="1989", type="ho", category="ch",
+                                                         activate=True,
+                                                         pics_1=create_test_image())
 
     def tearDown(self):
         folder_path = "mediafiles/test_gabigab"
@@ -88,4 +90,8 @@ class TestView(TestCase):
         self.assertEquals(response.status_code, 302)
         self.assertRedirects(response, f"{reverse('accounts:login')}?next={reverse('shop:create')}")
 
-        # Delete View https://youtu.be/hA_VxnxCHbo?si=iVpr_98f3JomVTET 12 minutes
+    def test_delete_garment(self):
+        self.assertEquals(Garment.objects.get(description="slug").description, "slug")
+        response = self.client.delete(self.delete_url, {"pk": 1})
+        self.assertEquals(Garment.objects.all().count(), 0)
+        self.assertEquals(response.status_code, 302)
