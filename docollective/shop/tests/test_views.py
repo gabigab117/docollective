@@ -1,6 +1,7 @@
 from django.test import TestCase, Client
 from django.urls import reverse
 from django.core.files.uploadedfile import SimpleUploadedFile
+from django.core.exceptions import ObjectDoesNotExist
 from shop.models import Garment, Order, Cart, Color
 from accounts.models import ExChanger
 
@@ -30,7 +31,7 @@ class TestView(TestCase):
         self.client = Client()
         self.index_url = reverse("index")
         self.all_garments_url = reverse("shop:all")
-        self.detail_url = reverse("shop:detail", args=["slug", 1])
+        self.detail_url = reverse("shop:detail", args=["fringue", 1])
         self.create_url = reverse("shop:create")
         self.delete_url = reverse("shop:delete-garment", args=[1])
 
@@ -40,7 +41,7 @@ class TestView(TestCase):
                                                    last_name="Gabriel", password="12345678")
         self.user2 = ExChanger.objects.create_user(email="gabi@gab.com", username="gabigab2", first_name="Trouvé2",
                                                    last_name="Gabriel2", password="12345678")
-        self.garment_1: Garment = Garment.objects.create(description="slug", user=self.user1, price=10, size=42,
+        self.garment_1: Garment = Garment.objects.create(description="fringue", user=self.user1, price=10, size=42,
                                                          color=self.color1, year="1989", type="ho", category="ch",
                                                          activate=True,
                                                          pics_1=create_test_image())
@@ -91,7 +92,6 @@ class TestView(TestCase):
         self.assertRedirects(response, f"{reverse('accounts:login')}?next={reverse('shop:create')}")
 
     def test_delete_garment(self):
-        self.assertEquals(Garment.objects.get(description="slug").description, "slug")
         response = self.client.delete(self.delete_url, {"pk": 1})
-        self.assertEquals(Garment.objects.all().count(), 0)
+        self.assertEquals(Garment.objects.filter(pk=1).first(), None)
         self.assertEquals(response.status_code, 302)
