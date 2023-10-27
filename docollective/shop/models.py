@@ -110,7 +110,7 @@ class Cart(models.Model):
     def __str__(self):
         return f"{self.user} - {self.creation_date}"
 
-    def delete(self, *args, **kwargs):
+    def user_delete_cart(self):
         for order in self.orders.all():
             order.delete()
-        super().delete(*args, **kwargs)
+        self.delete()

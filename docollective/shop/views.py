@@ -99,7 +99,7 @@ def delete_garments(request):
 
 @require_POST
 def delete_cart(request):
-    request.user.cart.delete()
+    request.user.cart.user_delete_cart()
     return redirect("index")
 
 
