@@ -47,6 +47,7 @@ def detail_view(request, slug, pk):
 
 
 @require_POST
+@login_required
 def add_to_cart(request, pk):
     user = request.user
 
