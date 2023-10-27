@@ -19,7 +19,7 @@ def index(request):
         garments: Garment = Garment.objects.filter(activate=True)
     else:
         # [plus ancien en partant du dernier-3:plus récent][inverser]
-        garments: Garment = Garment.objects.filter(activate=True)[count_garment-3:count_garment:-1]
+        garments: Garment = Garment.objects.filter(activate=True)[count_garment - 3:count_garment:-1]
     return render(request, "shop/index.html", context={"garments": garments})
 
 
@@ -31,11 +31,12 @@ def all_garments(request):
 
     search = request.GET.get("search")
     if search:
-        garments = Garment.objects.filter(Q(description__icontains=search) | Q(color__name__icontains=search))
+        garments = Garment.objects.filter(
+            Q(description__icontains=search, activate=True) | Q(color__name__icontains=search, activate=True))
 
     redirection = request.GET.get("category")
     if redirection:
-        garments = Garment.objects.filter(category=redirection)
+        garments = Garment.objects.filter(category=redirection, activate=True)
 
     return render(request, "shop/all.html", context={"garments": garments, "categories": categories})
 
@@ -117,3 +118,27 @@ class DeleteGarment(DeleteView):
     model = Garment
     success_url = reverse_lazy("index")
     template_name = "shop/delete-garment.html"
+
+
+def my_shop_view(request):
+    user = request.user
+    # Penser à la recherche dans les commandes
+
+    # Mes annonces
+    ads_published = Garment.objects.filter(user=user, activate=True)
+
+    # En modération
+    ads_not_published = Garment.objects.filter(user=user, activate=False)
+
+    # Acheté
+    purchases = Order.objects.filter(user=user, validation=True)
+
+    # Achats en attente de validation de la plateforme
+    purchases_not_validate = Order.objects.filter(user=user, validation=False)
+
+    return render(request, "shop/my_shop.html", context={
+        "ads_published": ads_published,
+        "ads_not_published": ads_not_published,
+        "purchases": purchases,
+        "purchases_not_validate": purchases_not_validate,
+    })

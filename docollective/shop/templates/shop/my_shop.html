@@ -1,0 +1,136 @@
+{% extends 'base.html' %}
+
+{% block title %}Ma page{% endblock %}
+
+
+{% block body %}
+
+<!--
+"ads_published": ads_published,
+"ads_not_published": ads_not_published,
+"purchases": purchases,
+"purchases_not_validate": purchases_not_validate,
+-->
+
+<div class="row mb-5">
+    <h2 class="text-center">Mon récap'</h2>
+
+</div>
+
+
+<div class="row justify-content-center">
+
+
+    <div class="col mb-5">
+        <h3>Mes annonces</h3>
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th scope="col">Lien</th>
+                <th scope="col">Description</th>
+                <th scope="col">Prix</th>
+                <th scope="col">Couleur</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for published_ad in ads_published %}
+            <tr>
+                <th scope="row"><a href="{% url 'shop:detail' slug=published_ad.slug pk=published_ad.pk %}">Voir
+                    l'annonce</a></th>
+                <td>{{ published_ad.description }}</td>
+                <td>{{ published_ad.price }}</td>
+                <td>{{ published_ad.color.name }}</td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <div class="col mb-5">
+        <h3>Mes annonces en attente de modération</h3>
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th scope="col">Lien</th>
+                <th scope="col">Description</th>
+                <th scope="col">Prix</th>
+                <th scope="col">Couleur</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for not_published_ad in ads_not_published %}
+            <tr>
+                <th scope="row"><a href="{% url 'shop:detail' slug=not_published_ad.slug pk=not_published_ad.pk %}">Voir
+                    l'annonce</a></th>
+                <td>{{ not_published_ad.description }}</td>
+                <td>{{ not_published_ad.price }}</td>
+                <td>{{ not_published_ad.color.name }}</td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+    </div>
+
+
+</div>
+
+
+<div class="row justify-content-center">
+    <div class="col mb-5">
+        <h3>Achats</h3>
+
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th scope="col">Lien</th>
+                <th scope="col">Date</th>
+                <th scope="col">Total</th>
+                <th scope="col">Numéro</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for purchase in purchases %}
+            <tr>
+                <th scope="row"><a href="">Voir
+                    la commande</a></th>
+                <td>{{ purchase.ordered_date }}</td>
+                <td>{{ purchase.garment.price }}</td>
+                <td>{{ purchase.reference }}</td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+    </div>
+
+    <div class="col mb-5">
+        <h3>Achats non finalisés</h3>
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th scope="col">Lien</th>
+                <th scope="col">Date</th>
+                <th scope="col">Total</th>
+                <th scope="col">Numéro</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for not_validate_purchase in purchases_not_validate %}
+            <tr>
+                <th scope="row"><a href="">Voir
+                    la commande</a></th>
+                <td>{{ not_validate_purchase.ordered_date }}</td>
+                <td>{{ not_validate_purchase.garment.price }}</td>
+                <td>{{ not_validate_purchase.reference }}</td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+
+</div>
+
+
+{% endblock %}

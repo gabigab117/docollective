@@ -1,6 +1,6 @@
 from django.urls import path
 from .views import detail_view, add_to_cart, cart_view, delete_garments, delete_cart, CreateGarment, all_garments, \
-    DeleteGarment
+    DeleteGarment, my_shop_view
 
 app_name = "shop"
 urlpatterns = [
@@ -12,4 +12,5 @@ urlpatterns = [
     path("create-garment/", CreateGarment.as_view(), name="create"),
     path("delete-garment/<int:pk>/", DeleteGarment.as_view(), name="delete-garment"),
     path("all/", all_garments, name="all"),
+    path("my-shp/", my_shop_view, name="my-shop"),
 ]

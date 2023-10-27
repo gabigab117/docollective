@@ -1,4 +1,6 @@
 import uuid
+
+from django.core.mail import send_mail
 from django.db import models
 from django.urls import reverse
 from django.utils import timezone
@@ -45,7 +47,16 @@ class Garment(models.Model):
     def save(self, *args, **kwargs):
         if not self.slug:
             self.slug = slugify(self.description)
+
+        if self not in Garment.objects.all():
+            Garment.__send_email()
+
         super().save(*args, **kwargs)
+
+    @staticmethod
+    def __send_email():
+        send_mail(subject="Nouvelle annonce", message="Nouvelle annonce déposée",
+                  recipient_list=["gabrieltrouve5@yahoo.com"], from_email=None)
 
     def get_absolute_url(self):
         # https://docs.djangoproject.com/fr/4.2/ref/models/instances/#get-absolute-url
@@ -78,6 +89,8 @@ class Order(models.Model):
     reference = models.UUIDField(default=uuid.uuid4, editable=True, verbose_name="Référence")
     ordered = models.BooleanField(default=False, verbose_name="Acquitté")
     ordered_date = models.DateTimeField(blank=True, null=True)
+    validation = models.BooleanField(default=False, verbose_name="Validation du deal",
+                                     help_text="Validation de la plateforme")
 
     class Meta:
         verbose_name = "Commande"
