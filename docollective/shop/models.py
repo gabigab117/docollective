@@ -87,7 +87,7 @@ class Order(models.Model):
     user = models.ForeignKey(to=AUTH_USER_MODEL, on_delete=models.CASCADE, verbose_name="Utilisateur")
     garment = models.ForeignKey(to=Garment, on_delete=models.SET_NULL, null=True, verbose_name="Vêtements")
     reference = models.UUIDField(default=uuid.uuid4, editable=True, verbose_name="Référence")
-    ordered = models.BooleanField(default=False, verbose_name="Acquitté")
+    ordered = models.BooleanField(default=False, verbose_name="Commandée")
     ordered_date = models.DateTimeField(blank=True, null=True)
     validation = models.BooleanField(default=False, verbose_name="Validation du deal",
                                      help_text="Validation de la plateforme")
