@@ -38,7 +38,7 @@
                 <th scope="row"><a href="{% url 'shop:detail' slug=published_ad.slug pk=published_ad.pk %}">Voir
                     l'annonce</a></th>
                 <td>{{ published_ad.description }}</td>
-                <td>{{ published_ad.price }}</td>
+                <td>{{ published_ad.price }} €</td>
                 <td>{{ published_ad.color.name }}</td>
             </tr>
             {% endfor %}
@@ -63,7 +63,7 @@
                 <th scope="row"><a href="{% url 'shop:detail' slug=not_published_ad.slug pk=not_published_ad.pk %}">Voir
                     l'annonce</a></th>
                 <td>{{ not_published_ad.description }}</td>
-                <td>{{ not_published_ad.price }}</td>
+                <td>{{ not_published_ad.price }} €</td>
                 <td>{{ not_published_ad.color.name }}</td>
             </tr>
             {% endfor %}
@@ -95,7 +95,7 @@
                 <th scope="row"><a href="">Voir
                     la commande</a></th>
                 <td>{{ purchase.ordered_date }}</td>
-                <td>{{ purchase.garment.price }}</td>
+                <td>{{ purchase.garment.price }} €</td>
                 <td>{{ purchase.reference }}</td>
             </tr>
             {% endfor %}
@@ -121,7 +121,7 @@
                 <th scope="row"><a href="">Voir
                     la commande</a></th>
                 <td>{{ not_validate_purchase.ordered_date }}</td>
-                <td>{{ not_validate_purchase.garment.price }}</td>
+                <td>{{ not_validate_purchase.garment.price }} €</td>
                 <td>{{ not_validate_purchase.reference }}</td>
             </tr>
             {% endfor %}

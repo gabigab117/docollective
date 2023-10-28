@@ -8,6 +8,7 @@ from django.views.decorators.http import require_POST
 from django.forms import modelformset_factory
 from django.views.generic import CreateView, DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.utils import timezone
 from .models import Garment, Cart, Order
 from .forms import OrderForm
 
@@ -84,6 +85,14 @@ def cart_view(request):
     formset = OrderFormSet(queryset=orders)
 
     return render(request, "shop/cart.html", context={"forms": formset})
+
+
+@require_POST
+def validate_cart(request):
+    cart = request.user.cart
+    cart.orders.all().update(ordered=True, ordered_date=timezone.now())
+    cart.delete()
+    return redirect("shop:my-shop")
 
 
 @require_POST
