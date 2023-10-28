@@ -41,19 +41,19 @@
             <!-- Product actions-->
             <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
                 <div class="text-center">
+                    {% if request.user != garment.user %}
                     <form method="post" action="{% url 'shop:add-to-cart' pk=garment.pk %}">
                         {% csrf_token %}
                         <input type="submit" value="Echanger" class="btn btn-outline-dark mt-auto">
 
                     </form>
-
+                    {% else %}
+                    <a href="{% url 'shop:delete-garment' pk=garment.pk %}" class="btn btn-outline-danger">Supprimer</a>
+                    {% endif %}
                 </div>
 
             </div>
         </div>
-        {% if request.user == garment.user %}
-        <a href="{% url 'shop:delete-garment' pk=garment.pk %}" class="btn btn-outline-danger">Supprimer l'annonce</a>
-        {% endif %}
     </div>
 
 
@@ -67,11 +67,11 @@
 
             {% if messages %}
 
-    {% for message in messages %}
-<h5 style="color: red;">{{ message }}</h5>
-    {% endfor %}
+            {% for message in messages %}
+            <h5 style="color: red;">{{ message }}</h5>
+            {% endfor %}
 
-{% endif %}
+            {% endif %}
         </div>
     </div>
 </div>
