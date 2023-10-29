@@ -87,7 +87,22 @@ def cart_view(request):
     return render(request, "shop/cart.html", context={"forms": formset})
 
 
+@login_required
+def address_choice_view(request):
+    user = request.user
+    try:
+        default_adresse = user.adresses.get(user=user, default=True)
+    except ObjectDoesNotExist:
+        default_adresse = None
+    adresses = user.adresses.filter(user=user, default=False)
+
+    return render(request, "shop/address-choice.html", context={"user": user,
+                                                                "default_adresse": default_adresse,
+                                                                "adresses": adresses})
+
+
 @require_POST
+@login_required
 def validate_cart(request):
     cart = request.user.cart
     cart.orders.all().update(ordered=True, ordered_date=timezone.now())

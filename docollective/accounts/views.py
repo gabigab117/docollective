@@ -1,11 +1,14 @@
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.views import LoginView
 from django.contrib.auth import logout
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.views import LoginView
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
+from django.views.generic import CreateView
 
 from .forms import ExChangerSignupForm
+from .models import ExChangerAdresses
 
 from verify_email.email_handler import send_verification_email
 
@@ -64,4 +67,23 @@ def default_address_view(request, pk):
         # Gérer l'erreur ici, par exemple en retournant une réponse d'erreur
         return HttpResponse("Adresse non trouvée", status=404)
 
+    if request.GET.get("redirect") == "validate":
+        return redirect("shop:address-choice")
+
     return redirect("accounts:profile")
+
+
+class CreateAddress(LoginRequiredMixin, CreateView):
+    model = ExChangerAdresses
+    template_name = "accounts/create-address.html"
+    fields = ["name", "address_1", "address_2", "city", "zip_code", "country"]
+    success_url = reverse_lazy("shop:address-choice")
+
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        if self.request.user.adresses.all():
+            self.request.user.adresses.filter(default=True).update(default=False)
+            form.instance.default = True
+        else:
+            form.instance.default = True
+        return super().form_valid(form)

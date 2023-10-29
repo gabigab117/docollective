@@ -2,34 +2,18 @@
 {% load static %}
 {% load crispy_forms_tags %}
 
-{% block title %}Profil{% endblock %}
+{% block title %}Choix de l'adresse{% endblock %}
 
 
 {% block body %}
-<div class="row">
-    <div class="col-4">
+<div class="row mb-5">
 
-        <div class="text-center">
-            <div class="card mx-auto" style="width: 18rem;">
-                <div class="card-header">
-                    Profil
-                </div>
-                <ul class="list-group list-group-flush">
-                    <li class="list-group-item">{{ user.email }}</li>
-                    <li class="list-group-item">{{ user.username }}</li>
-                    <li class="list-group-item">{{ user.first_name }}</li>
-                    <li class="list-group-item">{{ user.last_name }}</li>
-                </ul>
-            </div>
-        </div>
 
-    </div>
-
-    <div class="col-4">
+    <div class="col">
 
         <div class="text-center">
             {% if default_adresse %}
-            <div class="card" style="width: 18rem;">
+            <div class="card mx-auto" style="width: 18rem;">
                 <div class="card-header">
                     Adresse par défaut
                 </div>
@@ -53,20 +37,33 @@
         </div>
 
     </div>
-    <div class="col-4">
 
-        <div class="text-center">
-            Ici les prochains boutons : <br>
-            Modifier Mot de passe <br>
-            Modifier Mail
-
-        </div>
-
-    </div>
 
 </div>
-<div class="row" style="margin-top: 20px;">
 
+
+<div class="row mb-5 justify-content-between" style="margin-top: 20px;">
+
+    <div class="col-2">
+        {% if user.adresses.all.count > 0 %}
+        <!--
+        Valider la commande
+        faire une vue de validation
+        -->
+        <form action="" method="post">
+            {% csrf_token %}
+            <input type="submit" value="Passer la commande" class="btn btn-success">
+        </form>
+        {% else %}
+        <h4>Vous devez d'abord créer une adresse pour valider la commande</h4>
+        {% endif %}
+    </div>
+    <div class="col-2">
+        <a href="{% url 'accounts:create-address' %}" class="btn btn-outline-success">Créer une adresse</a>
+
+    </div>
+</div>
+<div class="row">
     <div class="col">
 
         <div class="text-center">
@@ -94,7 +91,8 @@
                         <li class="list-group-item">{{ adresse.get_country_display }}</li>
                     </ul>
 
-                    <form action="{% url 'accounts:default_address' pk=adresse.pk %}" method="post">
+                    <form action="{% url 'accounts:default_address' pk=adresse.pk %}?redirect=validate"
+                          method="post">
 
                         {% csrf_token %}
                         <input type="submit" value="Définir" class="btn btn-outline-info">
@@ -109,7 +107,5 @@
         </div>
 
     </div>
-
-
 </div>
 {% endblock %}

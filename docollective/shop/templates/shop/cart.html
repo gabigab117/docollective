@@ -59,13 +59,8 @@
     {% csrf_token %}
         <button type="submit" class="btn btn-outline-danger">Supprimer le panier</button>
 
-    </form>
 
-        <form action="{% url 'shop:validate-cart' %}" method="post">
-    {% csrf_token %}
-        <button type="submit" class="btn btn-outline-success">Valider</button>
-
-    </form>
+    <a href="{% url 'shop:address-choice' %}" class="btn btn-outline-success">Valider</a>
 
     {% else %}
     <div class="col mb-5">

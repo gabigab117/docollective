@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block title %}Créer une adresse{% endblock %}
+
+
+{% block body %}
+<div class="row">
+    <div class="col">
+        <form method="post">
+            {% csrf_token %}
+            {{ form|crispy }}
+            <input type="submit" value="Envoyer" class="btn btn-outline-primary">
+
+        </form>
+    </div>
+</div>
+{% endblock %}
