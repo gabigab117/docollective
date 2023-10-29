@@ -49,3 +49,4 @@ Une fois la commande validée (0 paiement) le vêtement choisi est désactivé e
 # Le plus
 Système de recommandation avec taille, préférence, description. A faire absolument ! Beau challenge
 Système de ticket / sav
+chart JS

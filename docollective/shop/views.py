@@ -105,7 +105,13 @@ def address_choice_view(request):
 @login_required
 def validate_cart(request):
     cart = request.user.cart
-    cart.orders.all().update(ordered=True, ordered_date=timezone.now())
+    orders = cart.orders.all()
+    orders.all().update(ordered=True, ordered_date=timezone.now())
+
+    for order in orders:
+        order.garment.activate = False
+        order.garment.save()
+
     cart.delete()
     return redirect("shop:my-shop")
 

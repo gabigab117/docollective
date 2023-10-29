@@ -45,12 +45,9 @@
 <div class="row mb-5 justify-content-between" style="margin-top: 20px;">
 
     <div class="col-2">
-        {% if user.adresses.all.count > 0 %}
-        <!--
-        Valider la commande
-        faire une vue de validation
-        -->
-        <form action="" method="post">
+        {% if user.adresses.all %}
+
+        <form action="{% url 'shop:validate-cart' %}" method="post">
             {% csrf_token %}
             <input type="submit" value="Passer la commande" class="btn btn-success">
         </form>
