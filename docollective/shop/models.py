@@ -37,6 +37,7 @@ class Garment(models.Model):
     pics_3 = models.ImageField(verbose_name="Photo 3", blank=True, null=True, upload_to=user_directory_path)
     published = models.DateTimeField(verbose_name="Date de publication", auto_now_add=True)
     activate = models.BooleanField(default=False, verbose_name="Activé")
+    bought = models.BooleanField(default=False, verbose_name="Acheté")
 
     class Meta:
         verbose_name = "Vêtement"

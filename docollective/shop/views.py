@@ -107,10 +107,7 @@ def validate_cart(request):
     cart = request.user.cart
     orders = cart.orders.all()
     orders.all().update(ordered=True, ordered_date=timezone.now())
-
-    for order in orders:
-        order.garment.activate = False
-        order.garment.save()
+    orders.garment.all().update(activate=False, bought=True)
 
     cart.delete()
     return redirect("shop:my-shop")
