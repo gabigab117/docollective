@@ -20,3 +20,9 @@ class OrderForm(forms.ModelForm):
             return True
 
         return super().save(*args, **kwargs)
+
+
+class PendingForm(forms.ModelForm):
+    class Meta:
+        model = Order
+        fields = ["validation"]

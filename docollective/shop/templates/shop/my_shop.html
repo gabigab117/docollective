@@ -118,8 +118,11 @@
             <tbody>
             {% for not_validate_purchase in purchases_not_validate %}
             <tr>
-                <th scope="row"><a href="">Voir
-                    la commande</a></th>
+                <th scope="row">
+
+                    Commande
+
+                </th>
                 <td>{{ not_validate_purchase.ordered_date }}</td>
                 <td>{{ not_validate_purchase.garment.price }} €</td>
                 <td>{{ not_validate_purchase.reference }}</td>
@@ -127,6 +130,8 @@
             {% endfor %}
             </tbody>
         </table>
+
+
     </div>
 
 

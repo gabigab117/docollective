@@ -90,8 +90,7 @@ class Order(models.Model):
     reference = models.UUIDField(default=uuid.uuid4, editable=True, verbose_name="Référence")
     ordered = models.BooleanField(default=False, verbose_name="Commandée")
     ordered_date = models.DateTimeField(blank=True, null=True)
-    validation = models.BooleanField(default=False, verbose_name="Validation du deal",
-                                     help_text="Validation de la plateforme")
+    validation = models.BooleanField(default=False, verbose_name="Validation du deal")
 
     class Meta:
         verbose_name = "Commande"

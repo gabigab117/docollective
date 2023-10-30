@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+
+{% block title %}Admin Validation{% endblock %}
+
+
+{% block body %}
+
+<div class="row mb-5">
+    <h2 class="text-center">En attente de validation</h2>
+
+</div>
+
+
+<div class="row justify-content-center">
+
+
+    <div class="col mb-5">
+
+        <form action="{% url 'shop:admin-validation' %}" method="post">
+            {% csrf_token %}
+            {{ forms.management_form }}
+
+
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th scope="col">Validation</th>
+                    <th scope="col">Date</th>
+                    <th scope="col">Utilisateur</th>
+                    <th scope="col">Numéro</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for form in forms %}
+                <tr>
+                    <th scope="row">
+
+                        {{ form.as_p }}
+
+                    </th>
+                    <td>{{ form.instance.ordered_date }}</td>
+                    <td>{{ form.instance.user }}</td>
+                    <td>{{ form.instance.reference }}</td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+
+            <input type="submit" value="Valider" class="btn btn-success">
+        </form>
+
+
+    </div>
+
+
+</div>
+
+{% endblock %}

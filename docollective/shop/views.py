@@ -1,7 +1,8 @@
 from django.contrib import messages
 from django.db.models import Q
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, user_passes_test
 from django.core.exceptions import ObjectDoesNotExist
+from django.http import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse_lazy
 from django.views.decorators.http import require_POST
@@ -10,7 +11,7 @@ from django.views.generic import CreateView, DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.utils import timezone
 from .models import Garment, Cart, Order
-from .forms import OrderForm
+from .forms import OrderForm, PendingForm
 
 
 def index(request):
@@ -173,3 +174,17 @@ def my_shop_view(request):
         "purchases": purchases,
         "purchases_not_validate": purchases_not_validate,
     })
+
+
+@user_passes_test(lambda user: user.is_superuser)
+def admin_validation_view(request):
+    pending_orders = Order.objects.filter(validation=False)
+    PendingFormSet = modelformset_factory(Order, PendingForm, extra=0)
+    formset = PendingFormSet(queryset=pending_orders)
+
+    if request.method == "POST":
+        formset = PendingFormSet(request.POST, queryset=pending_orders)
+        if formset.is_valid():
+            formset.save()
+            return HttpResponseRedirect(request.path)
+    return render(request, "shop/admin-validation.html", context={"forms": formset})

@@ -81,9 +81,7 @@ class CreateAddress(LoginRequiredMixin, CreateView):
 
     def form_valid(self, form):
         form.instance.user = self.request.user
-        if self.request.user.adresses.all():
-            self.request.user.adresses.filter(default=True).update(default=False)
-            form.instance.default = True
-        else:
-            form.instance.default = True
+        self.request.user.adresses.filter(default=True).update(default=False)
+        form.instance.default = True
+
         return super().form_valid(form)
