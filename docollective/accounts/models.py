@@ -2,6 +2,10 @@ import iso3166
 from django.db import models
 from django.contrib.auth.models import AbstractUser, BaseUserManager
 
+from shop.models import SIZES, Color
+
+TYPE_USER = [("h", "Homme"), ("f", "Femme"), ("nr", "Non renseigné")]
+
 
 class ExChangerManager(BaseUserManager):
     def create_user(self, email, username, first_name, last_name, password, **kwargs):
@@ -24,6 +28,10 @@ class ExChangerManager(BaseUserManager):
 
 class ExChanger(AbstractUser):
     email = models.EmailField(unique=True)
+    type = models.CharField(max_length=10, verbose_name="Sexe", choices=TYPE_USER)
+    size = models.CharField(verbose_name="Taille", choices=SIZES, max_length=10, blank=True)
+    favorite_color = models.ForeignKey(to=Color, on_delete=models.SET_NULL, verbose_name="Couleur favorite",
+                                       null=True, blank=True)
 
     REQUIRED_FIELDS = ["username", "first_name", "last_name"]
     USERNAME_FIELD = "email"
