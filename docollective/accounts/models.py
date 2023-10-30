@@ -29,7 +29,9 @@ class ExChangerManager(BaseUserManager):
 class ExChanger(AbstractUser):
     email = models.EmailField(unique=True)
     type = models.CharField(max_length=10, verbose_name="Sexe", choices=TYPE_USER)
-    size = models.CharField(verbose_name="Taille", choices=SIZES, max_length=10, blank=True)
+    upper_size = models.CharField(verbose_name="Taille haut du corps", choices=SIZES, max_length=10, blank=True)
+    lower_size = models.CharField(verbose_name="Taille bas du corps", choices=SIZES, max_length=10, blank=True)
+    foot_size = models.CharField(verbose_name="Pointure", choices=SIZES, max_length=10, blank=True)
     favorite_color = models.ForeignKey(to=Color, on_delete=models.SET_NULL, verbose_name="Couleur favorite",
                                        null=True, blank=True)
 
@@ -43,6 +45,18 @@ class ExChanger(AbstractUser):
     def number_adresses(self):
         number_adresses = ExChangerAdresses.objects.filter(user=self).count()
         return number_adresses
+
+    @property
+    def upper_size_property(self):
+        return self.upper_size or "nc"
+
+    @property
+    def lower_size_property(self):
+        return self.lower_size or "nc"
+
+    @property
+    def foot_size_property(self):
+        return self.foot_size or "nc"
 
 
 class ExChangerAdresses(models.Model):

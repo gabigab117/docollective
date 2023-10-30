@@ -8,4 +8,5 @@ class ExChangerSignupForm(UserCreationForm):
 
     class Meta:
         model = get_user_model()
-        fields = ["username", "email", "first_name", "last_name", "type", "size", "favorite_color"]
+        fields = ["username", "email", "first_name", "last_name", "type", "upper_size", "lower_size", "foot_size",
+                  "favorite_color"]

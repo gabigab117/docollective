@@ -1,0 +1,146 @@
+{% extends 'base.html' %}
+
+{% block title %}Recommandations{% endblock %}
+
+
+{% block body %}
+
+<div class="row mb-5">
+    <h2 class="text-center">Basées sur vos préférences</h2>
+
+</div>
+
+<!-- Hauts -->
+<div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+    <h3 class="text-center">Hauts</h3>
+    {% if upper_garments %}
+    {% for upper_garment in upper_garments %}
+    <div class="col mb-5">
+
+        <div class="card h-100">
+            <!-- Product image-->
+            <img class="card-img-top" src="{{ upper_garment.pics_1.url }}"/>
+            <!-- Product details-->
+            <div class="card-body p-4">
+                <div class="text-center">
+                    <!-- Product name-->
+                    <h5 class="fw-bolder">{{ upper_garment.description }}</h5>
+                    <!-- Product price-->
+                    {{ upper_garment.price }} € <br>
+
+                    <!-- Product state-->
+                    {{ upper_garment.get_state_display }} <br>
+                    <!-- Product size-->
+                    Taille {{ upper_garment.size }}<br>
+                    <!-- Product year-->
+                    Année {{ upper_garment.garment_year }}
+                </div>
+            </div>
+            <!-- Product actions-->
+            <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                <div class="text-center"><a class="btn btn-outline-dark mt-auto"
+                                            href="{% url 'shop:detail' slug=upper_garment.slug pk=upper_garment.pk %}">Détail</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    {% endfor %}
+    {% else %}
+    <div class="col mb-5">
+        <h5>Veuillez compléter vos préférences sur votre profil pour avoir des recommandations. Si c'est déjà fait il n'y a pas de recommandations qui correspondent à votre besoin.</h5>
+    </div>
+    {% endif %}
+</div>
+
+<!-- Bas -->
+<div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+    <h3 class="text-center">Pantalons</h3>
+    {% if lower_garments %}
+    {% for lower_garment in lower_garments %}
+    <div class="col mb-5">
+
+        <div class="card h-100">
+            <!-- Product image-->
+            <img class="card-img-top" src="{{ lower_garment.pics_1.url }}"/>
+            <!-- Product details-->
+            <div class="card-body p-4">
+                <div class="text-center">
+                    <!-- Product name-->
+                    <h5 class="fw-bolder">{{ lower_garment.description }}</h5>
+                    <!-- Product price-->
+                    {{ lower_garment.price }} € <br>
+
+                    <!-- Product state-->
+                    {{ lower_garment.get_state_display }} <br>
+                    <!-- Product size-->
+                    Taille {{ lower_garment.size }}<br>
+                    <!-- Product year-->
+                    Année {{ lower_garment.garment_year }}
+                </div>
+            </div>
+            <!-- Product actions-->
+            <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                <div class="text-center"><a class="btn btn-outline-dark mt-auto"
+                                            href="{% url 'shop:detail' slug=lower_garment.slug pk=lower_garment.pk %}">Détail</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    {% endfor %}
+    {% else %}
+    <div class="col mb-5">
+        <h5>Veuillez compléter vos préférences sur votre profil pour avoir des recommandations. Si c'est déjà fait il n'y a pas de recommandations qui correspondent à votre besoin.</h5>
+    </div>
+    {% endif %}
+</div>
+
+<!-- Pieds -->
+<div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+    <h3 class="text-center">Chaussures / chaussettes</h3>
+    {% if foot_garments %}
+    {% for foot_garment in foot_garments %}
+    <div class="col mb-5">
+
+        <div class="card h-100">
+            <!-- Product image-->
+            <img class="card-img-top" src="{{ foot_garment.pics_1.url }}"/>
+            <!-- Product details-->
+            <div class="card-body p-4">
+                <div class="text-center">
+                    <!-- Product name-->
+                    <h5 class="fw-bolder">{{ foot_garment.description }}</h5>
+                    <!-- Product price-->
+                    {{ foot_garment.price }} € <br>
+
+                    <!-- Product state-->
+                    {{ foot_garment.get_state_display }} <br>
+                    <!-- Product size-->
+                    Taille {{ foot_garment.size }}<br>
+                    <!-- Product year-->
+                    Année {{ foot_garment.garment_year }}
+                </div>
+            </div>
+            <!-- Product actions-->
+            <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                <div class="text-center"><a class="btn btn-outline-dark mt-auto"
+                                            href="{% url 'shop:detail' slug=foot_garment.slug pk=foot_garment.pk %}">Détail</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    {% endfor %}
+    {% else %}
+    <div class="col mb-5">
+        <h5>Veuillez compléter vos préférences sur votre profil pour avoir des recommandations. Si c'est déjà fait il
+            n'y a pas de recommandations qui correspondent à votre besoin.</h5>
+    </div>
+    {% endif %}
+</div>
+
+{% endblock %}

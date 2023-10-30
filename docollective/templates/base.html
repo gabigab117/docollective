@@ -61,7 +61,7 @@
                         </li>
 
                         {% if request.user.is_authenticated %}
-                        <li><a class="dropdown-item" href="#!">Mes favoris</a></li>
+                        <li><a class="dropdown-item" href="{% url 'shop:recommendations' %}">Recommandations</a></li>
                         {% endif %}
                     </ul>
                 </li>

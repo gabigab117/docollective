@@ -10,7 +10,7 @@ from docollective.settings import AUTH_USER_MODEL
 
 SIZES = [(str(i), str(i)) for i in range(16, 71)]
 YEARS = [(str(y), str(y)) for y in range(1900, timezone.now().year + 1)]
-CATEGORY = [("ch", "Chaussures"), ("ma", "Manteaux"), ("pa", "Pantalons"), ("ha", "Hauts"), ("sv", "Sous_vêtements")]
+CATEGORY = [("ch", "Chaussures"), ("pa", "Pantalons"), ("ha", "Hauts")]
 STATE = [("b", "Bon état"), ("tb", "Très bon état"), ("cn", "Comme neuf")]
 TYPE = [("h", "Homme"), ("f", "Femme"), ("e", "Enfant")]
 
