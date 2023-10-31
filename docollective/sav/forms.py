@@ -9,3 +9,9 @@ class MessageForm(forms.ModelForm):
     class Meta:
         model = Message
         fields = ["subject", "message"]
+
+
+class ResponseForm(forms.ModelForm):
+    class Meta:
+        model = Message
+        fields = ["message"]

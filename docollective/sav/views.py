@@ -1,10 +1,10 @@
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponseRedirect
 from django.core.exceptions import PermissionDenied
 
-from .forms import MessageForm
+from .forms import MessageForm, ResponseForm
 from .models import Ticket, Message
 
 
@@ -46,8 +46,20 @@ def closed_tickets(request):
 
 
 def ticket_view(request, pk):
+    user = request.user
     ticket = get_object_or_404(Ticket, pk=pk)
-    if request.user != ticket.user:
+    if user != ticket.user:
         raise PermissionDenied()
     ticket_messages = Message.objects.filter(ticket=ticket)
-    return render(request, "sav/ticket.html", context={"ticket": ticket, "messages": ticket_messages})
+
+    if request.method == "POST":
+        form = ResponseForm(request.POST)
+        if form.is_valid():
+            form.instance.user = user
+            form.instance.ticket = ticket
+            form.save()
+            return redirect(ticket)
+    else:
+        form = ResponseForm()
+    return render(request, "sav/ticket.html", context={"ticket": ticket,
+                                                       "messages": ticket_messages, "form": form})

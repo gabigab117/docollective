@@ -1,12 +1,13 @@
 {% extends 'base.html' %}
+{% load crispy_forms_tags %}
 
-{% block title %}{{ ticket.reference }}{% endblock %}
+{% block title %}{{ ticket.objet }}{% endblock %}
 
 
 {% block body %}
 
 <div class="row mb-5">
-    <h2 class="text-center">Ticket {{ ticket.reference }}</h2>
+    <h2 class="text-center">{{ ticket.subject }}</h2>
 
 </div>
 
@@ -26,7 +27,7 @@
             </div>
             <div class="card-body">
                 <blockquote class="blockquote mb-0">
-                    <p>message.message</p>
+                    <p>{{ message.message }}</p>
                     <footer class="blockquote-footer"><cite title="Source Title">{{ message.date }}</cite>
                     </footer>
                 </blockquote>
@@ -35,15 +36,23 @@
 
         {% endfor %}
 
-        <!--
-
-        Formulaire de réponse limité à l'utilisateur à qui appartient le ticket et aux admins
-        -->
-
 
     </div>
 
+</div>
 
+<div class="row justify-content-center">
+    <div class="col -mb-5">
+        <!--
+
+           Formulaire de réponse limité à l'utilisateur à qui appartient le ticket et aux admins
+           -->
+        <form method="post">
+            {% csrf_token %}
+            {{ form|crispy }}
+            <input type="submit" value="Envoyer" class="btn btn-outline-success">
+        </form>
+    </div>
 </div>
 
 {% endblock %}
