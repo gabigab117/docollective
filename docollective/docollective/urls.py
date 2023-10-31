@@ -10,6 +10,7 @@ urlpatterns = [
     path("", index, name="index"),
     path("account/", include("accounts.urls")),
     path("shop/", include("shop.urls")),
+    path("sav/", include("sav.urls")),
     path('verification/', include('verify_email.urls')),
 ]
 

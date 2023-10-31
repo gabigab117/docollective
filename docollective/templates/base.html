@@ -72,12 +72,12 @@
                     <a class="nav-link active dropdown-toggle" id="navbarDropdown3" href="#" role="button"
                        data-bs-toggle="dropdown" aria-expanded="false">Assistance</a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown3">
-                        <li><a class="dropdown-item" href="">Nouveau ticket</a></li>
+                        <li><a class="dropdown-item" href="{% url 'sav:new-ticket' %}">Nouveau ticket</a></li>
                         <li>
                             <hr class="dropdown-divider"/>
                         </li>
-                        <li><a class="dropdown-item" href="">Tickets en cours</a></li>
-                        <li><a class="dropdown-item" href="">Historique</a></li>
+                        <li><a class="dropdown-item" href="{% url 'sav:pending-tickets' %}">Tickets en cours</a></li>
+                        <li><a class="dropdown-item" href="{% url 'sav:closed-tickets' %}">Historique</a></li>
                     </ul>
                 </li>
 

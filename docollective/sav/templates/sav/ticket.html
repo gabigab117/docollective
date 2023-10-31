@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ ticket.reference }}{% endblock %}
+
+
+{% block body %}
+
+<div class="row mb-5">
+    <h2 class="text-center">Ticket {{ ticket.reference }}</h2>
+
+</div>
+
+
+<div class="row justify-content-center">
+
+
+    <div class="col mb-5">
+
+        <!--
+            Message par message dans une card
+            -->
+        {% for message in messages %}
+        <div class="card">
+            <div class="card-header">
+                {{ message.user }}
+            </div>
+            <div class="card-body">
+                <blockquote class="blockquote mb-0">
+                    <p>message.message</p>
+                    <footer class="blockquote-footer"><cite title="Source Title">{{ message.date }}</cite>
+                    </footer>
+                </blockquote>
+            </div>
+        </div>
+
+        {% endfor %}
+
+        <!--
+
+        Formulaire de réponse limité à l'utilisateur à qui appartient le ticket et aux admins
+        -->
+
+
+    </div>
+
+
+</div>
+
+{% endblock %}
