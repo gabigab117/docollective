@@ -67,7 +67,21 @@
                 </li>
 
 
-                <li class="nav-item"><a class="nav-link active" aria-current="page" href="#!">Nous contacter</a></li>
+               <!--SAV -->
+                 <li class="nav-item dropdown">
+                    <a class="nav-link active dropdown-toggle" id="navbarDropdown3" href="#" role="button"
+                       data-bs-toggle="dropdown" aria-expanded="false">Assistance</a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown3">
+                        <li><a class="dropdown-item" href="">Nouveau ticket</a></li>
+                        <li>
+                            <hr class="dropdown-divider"/>
+                        </li>
+                        <li><a class="dropdown-item" href="">Tickets en cours</a></li>
+                        <li><a class="dropdown-item" href="">Historique</a></li>
+                    </ul>
+                </li>
+
+                <!--SAV -->
 
                 {% if request.user.is_superuser %}
                 <li class="nav-item"><a class="nav-link active" aria-current="page" href="{% url 'admin:index' %}">Administration</a></li>
