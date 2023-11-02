@@ -1,6 +1,9 @@
 # DOCOLLECTIVE
 
 Une plateforme d'échange de vêtements. Réalisée dans le cadre du projet du mois d'octobre Docstring.
+L'idée est qu'un utilisateur peut choisir 1 ou plusieurs vêtements. Il valide la commande (sans payer). En contrepartie
+il doit créer des annonces et envoyer des vêtements à la plateforme pour recevoir ceux qu'il voulait. L'idée est de
+créer une plateforme purement basée sur l'échange.
 
 ## App Utilisateurs (accounts)
 
