@@ -1,11 +1,85 @@
-# docollective
+# DOCOLLECTIVE
 
-Une plateforme d'échange de vêtements.
+Une plateforme d'échange de vêtements. Réalisée dans le cadre du projet du mois d'octobre Docstring.
 
-# Notes
+## App Utilisateurs (accounts)
 
-- Url lisible : pk + slug
+Un package views :
 
-# Le plus
-Système de recommandation avec taille, préférence, description.
-Système de ticket / sav
+- users.py pour tout ce qui est signup, login, logout et profil.
+- password.py pour ce qui concerne le changement de mot de passe et la demande d'un nouveau.
+
+### Profil
+
+L'utilisateur a accès à ses informations personnelles. Il peut créer des adresses et en sélectionner une par défaut.
+
+### Password
+
+Utilisation des classes de Django ==> 100% héritage
+
+## App Marketplace (shop)
+
+L'idée n'est pas de gagner de l'argent ici (règle du projet Docstring). Je n'ai donc pas intégré Stripe sur ce projet.
+Traditionnelles vues d'index, de détail, de liste des instances, mais...
+
+### Les recommandations
+
+Création d'une vue pour les recommandations. Pour la première fois, j'ai utilisé les requêtes Q.
+Une vue spécifique avec des annonces en fonction des préférences de l'utilisateur.
+Afin de ne pas avoir d'erreur "NonType" j'ai mis en place des "property" qui retournent les préférences de l'utilisateur
+ou (or) "NC".
+
+### Ajout au panier
+
+Vérification : L'annonce est-elle déjà dans un panier ? Ou bien même dans mon panier ?
+
+### La panier
+
+modelformset_factory pour pouvoir sélectionner et supprimer plusieurs éléments
+
+### Choix de l'adresse
+
+Au moment de la commande. J'utilise une vue de l'app accounts. Pour être redirigé au bon endroit j'utilise un paramètre
+d'url.
+
+### Suppression d'une annonce
+
+Surcharge de form_valid afin de rendre la suppression d'une annonce si elle est dans un panier.
+
+### Tableau de bord utilisateur
+
+my_shop_view. Les annonces publiées, en attente de modération, mes demandes d'échanges, les échanges validés.
+
+### Pour les administrateurs
+
+- Vue pour valider les demandes d'échanges
+- Vue pour valider la publication des annonces
+
+## App SAV (sav)
+
+Gérer les demandes des utilisateurs.
+Un modèle Ticket et un modèle Message. Un ticket comportera des messages.
+
+L'utilisateur peut Ouvrir un ticket, consulter les tickets en cours et l'historique des tickets clôturés.
+
+### Ouverture d'un ticket
+
+Lorsqu'un utilisateur écrit un premier message, j'utilise un ModelForm avec un champ supplémentaire qui me permet de
+créer un ticket et d'associer le message au ticket.
+
+### Les tickets en cours
+
+La vue d'un ticket est limitée aux superusers et au "propriétaire" du ticket. Un formulaire permet de poster des
+messages.
+
+### Clôture
+
+Vue pour clôturer un ticket.
+
+### Administration
+
+Une vue pour les superusers, ils peuvent consulter tous les tickets en cours.
+
+# A faire
+
+Continuer les tests
