@@ -8,8 +8,8 @@ from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views.generic import CreateView
 
-from .forms import ExChangerSignupForm
-from .models import ExChangerAdresses
+from accounts.forms import ExChangerSignupForm
+from accounts.models import ExChangerAdresses
 
 from verify_email.email_handler import send_verification_email
 

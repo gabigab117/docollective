@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block title %}Nouveau mot de passe crée{% endblock %}
+
+
+{% block body %}
+<div class="row">
+    <div class="col-6">
+
+        <h5>Vous pouvez vous connecter avec votre nouveau mot de passe.</h5>
+
+    </div>
+    <div class="col-6">
+<div class="text-center">
+<img src="{% static 'assets/signup_compress.jpg' %}" class="img-fluid">
+</div>
+    </div>
+</div>
+{% endblock %}

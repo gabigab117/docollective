@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block title %}Nouveau mot de passe demandé{% endblock %}
+
+
+{% block body %}
+<div class="row">
+    <div class="col-6">
+
+        <h5>Un lien vous a été envoyé.</h5>
+
+    </div>
+    <div class="col-6">
+<div class="text-center">
+<img src="{% static 'assets/signup_compress.jpg' %}" class="img-fluid">
+</div>
+    </div>
+</div>
+{% endblock %}
