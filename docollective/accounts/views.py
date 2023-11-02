@@ -2,6 +2,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import LoginView
+from django.core.exceptions import ObjectDoesNotExist
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
@@ -38,7 +39,11 @@ def exchanger_logout(request):
 @login_required
 def exchanger_profile(request):
     user = request.user
-    default_adresse = user.adresses.get(user=user, default=True)
+    try:
+        default_adresse = user.adresses.get(user=user, default=True)
+    except ObjectDoesNotExist:
+        default_adresse = None
+
     adresses = user.adresses.filter(user=user, default=False)
 
     return render(request, "accounts/profile.html", context={"user": user,
