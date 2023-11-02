@@ -11,7 +11,7 @@ from django.views.generic import CreateView, DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.utils import timezone
 from .models import Garment, Cart, Order
-from .forms import OrderForm, PendingForm
+from .forms import OrderForm, PendingForm, GarmentPendingForm
 
 
 def index(request):
@@ -205,9 +205,10 @@ def my_shop_view(request):
     })
 
 
+# Validation des échanges par les admin
 @user_passes_test(lambda user: user.is_superuser)
-def admin_validation_view(request):
-    pending_orders = Order.objects.filter(validation=False)
+def admin_deal_validation_view(request):
+    pending_orders = Order.objects.filter(validation=False, ordered=True)
     PendingFormSet = modelformset_factory(Order, PendingForm, extra=0)
     formset = PendingFormSet(queryset=pending_orders)
 
@@ -217,3 +218,19 @@ def admin_validation_view(request):
             formset.save()
             return HttpResponseRedirect(request.path)
     return render(request, "shop/admin-validation.html", context={"forms": formset})
+
+
+# Validation des annonces
+@user_passes_test(lambda user: user.is_superuser)
+def admin_advert_validation_view(request):
+    pending_garment = Garment.objects.filter(activate=False, bought=False)
+    GarmentPendingFormSet = modelformset_factory(Garment, GarmentPendingForm, extra=0)
+    formset = GarmentPendingFormSet(queryset=pending_garment)
+
+    if request.method == "POST":
+        formset = GarmentPendingFormSet(request.POST, queryset=pending_garment)
+        if formset.is_valid():
+            formset.save()
+            return HttpResponseRedirect(request.path)
+
+    return render(request, "shop/admin-ad-validation.html", context={"forms": formset})
