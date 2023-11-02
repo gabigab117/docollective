@@ -45,6 +45,7 @@ def all_garments(request):
     return render(request, "shop/all.html", context={"garments": garments, "categories": categories})
 
 
+@login_required
 def recommendations_view(request):
     user = request.user
     # Haut du corps
@@ -173,12 +174,13 @@ class CreateGarment(LoginRequiredMixin, CreateView):
         return super().form_valid(form)
 
 
-class DeleteGarment(DeleteView):
+class DeleteGarment(LoginRequiredMixin, DeleteView):
     model = Garment
     success_url = reverse_lazy("index")
     template_name = "shop/delete-garment.html"
 
 
+@login_required
 def my_shop_view(request):
     user = request.user
     # Penser à la recherche dans les commandes
