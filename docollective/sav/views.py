@@ -45,11 +45,13 @@ def closed_tickets(request):
     return render(request, "sav/closed-tickets.html", context={"tickets": tickets})
 
 
+@login_required
 def ticket_view(request, pk):
     user = request.user
     ticket = get_object_or_404(Ticket, pk=pk)
-    if user != ticket.user:
+    if user != ticket.user and not user.is_superuser:
         raise PermissionDenied()
+
     ticket_messages = Message.objects.filter(ticket=ticket)
 
     if request.method == "POST":

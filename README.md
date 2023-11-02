@@ -14,6 +14,7 @@ Une plateforme d'échange de vêtements.
 # Reprendre
 
 - Empêcher un delete quand un article est dans un panier
+- fix vue de profil si pas d'adresse
 
 # Notes
 
@@ -21,5 +22,4 @@ Une plateforme d'échange de vêtements.
 
 # Le plus
 Système de recommandation avec taille, préférence, description. A faire absolument ! Beau challenge ==> Ok demander un avis si c'est bien fait
-Système de ticket / sav ==> à faire
-chart JS ==>  à faire
+Système de ticket / sav ==> à terminer
