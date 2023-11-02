@@ -1,5 +1,5 @@
 from django.contrib import messages
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, user_passes_test
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponseRedirect
 from django.core.exceptions import PermissionDenied
@@ -65,3 +65,9 @@ def ticket_view(request, pk):
         form = ResponseForm()
     return render(request, "sav/ticket.html", context={"ticket": ticket,
                                                        "messages": ticket_messages, "form": form})
+
+
+@user_passes_test(lambda user: user.is_superuser)
+def tickets_admin_view(request):
+    tickets = Ticket.objects.filter(closed=False)
+    return render(request, "sav/tickets-admin.html", context={"tickets": tickets})
