@@ -1,5 +1,6 @@
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required, user_passes_test
+from django.views.decorators.http import require_POST
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponseRedirect
 from django.core.exceptions import PermissionDenied
@@ -71,3 +72,12 @@ def ticket_view(request, pk):
 def tickets_admin_view(request):
     tickets = Ticket.objects.filter(closed=False)
     return render(request, "sav/tickets-admin.html", context={"tickets": tickets})
+
+
+@require_POST
+def close_ticket(request, pk):
+    Ticket.objects.update_or_create(
+        pk=pk,
+        defaults={"closed": True}
+    )
+    return redirect("sav:admin-tickets")

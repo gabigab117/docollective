@@ -41,8 +41,8 @@
 
 </div>
 
-<div class="row justify-content-center">
-    <div class="col -mb-5">
+<div class="row justify-content-center mb-5">
+    <div class="col">
         <!--
 
            Formulaire de réponse limité à l'utilisateur à qui appartient le ticket et aux admins
@@ -53,6 +53,19 @@
             <input type="submit" value="Envoyer" class="btn btn-outline-success">
         </form>
     </div>
+</div>
+
+<div class="row justify-content-center">
+    <div class="col mb-5">
+        <form method="post" action="{% url 'sav:close' pk=ticket.pk %}">
+            {% csrf_token %}
+            <input type="submit" value="Clôturer le ticket" class="btn btn-success">
+
+        </form>
+
+    </div>
+
+
 </div>
 
 {% endblock %}
