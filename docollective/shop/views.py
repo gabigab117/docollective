@@ -179,6 +179,14 @@ class DeleteGarment(LoginRequiredMixin, DeleteView):
     success_url = reverse_lazy("index")
     template_name = "shop/delete-garment.html"
 
+    def form_valid(self, form):
+        garment = self.get_object()
+        if Cart.objects.filter(orders__garment__id=garment.id).exists():
+            messages.add_message(self.request, messages.WARNING,
+                                 "L'annonce est dans le panier d'un utilisateur, impossible de la supprimer.")
+            return redirect(garment)
+        return super().form_valid(form)
+
 
 @login_required
 def my_shop_view(request):
