@@ -2,10 +2,6 @@
 
 Une plateforme d'échange de vêtements.
 
-# Reprendre
-
-- Empêcher un delete quand un article est dans un panier
-
 # Notes
 
 - Url lisible : pk + slug

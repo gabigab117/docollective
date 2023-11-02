@@ -58,6 +58,10 @@ class ExChanger(AbstractUser):
     def foot_size_property(self):
         return self.foot_size or "nc"
 
+    @property
+    def favorite_color_property(self):
+        return self.favorite_color.name if self.favorite_color else "nc"
+
 
 class ExChangerAdresses(models.Model):
     user: ExChanger = models.ForeignKey(to=ExChanger, on_delete=models.CASCADE, verbose_name="Utilisateur",

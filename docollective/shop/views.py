@@ -51,20 +51,20 @@ def recommendations_view(request):
     # Haut du corps
     upper_garments = Garment.objects.filter(
         Q(size=user.upper_size_property), Q(activate=True), Q(type=user.type), Q(category="ha"),
-        Q(description__icontains=user.favorite_color.name) | Q(
-            color__name__icontains=user.favorite_color.name)
+        Q(description__icontains=user.favorite_color_property) | Q(
+            color__name__icontains=user.favorite_color_property)
     )
     # Bas du corps
     lower_garments = Garment.objects.filter(
         Q(size=user.lower_size_property), Q(activate=True), Q(type=user.type), Q(category="pa"),
-        Q(description__icontains=user.favorite_color.name) | Q(
-            color__name__icontains=user.favorite_color.name)
+        Q(description__icontains=user.favorite_color_property) | Q(
+            color__name__icontains=user.favorite_color_property)
     )
     # Pieds
     foot_garments = Garment.objects.filter(
         Q(size=user.foot_size_property), Q(activate=True), Q(type=user.type), Q(category="ch"),
-        Q(description__icontains=user.favorite_color.name) | Q(
-            color__name__icontains=user.favorite_color.name)
+        Q(description__icontains=user.favorite_color_property) | Q(
+            color__name__icontains=user.favorite_color_property)
     )
     return render(request, "shop/recommendations.html", context={"upper_garments": upper_garments,
                                                                  "lower_garments": lower_garments,
