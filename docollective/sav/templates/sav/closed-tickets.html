@@ -30,9 +30,9 @@
             {% for ticket in tickets %}
             <tr>
                 <th scope="row">
-
-                    {{ ticket.date }}
-
+                    <a href="{% url 'sav:ticket' pk=ticket.pk %}">
+                        {{ ticket.date }}
+                    </a>
                 </th>
                 <td>{{ ticket.subject }}</td>
                 <td>{{ ticket.messages_count }}</td>
