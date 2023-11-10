@@ -94,4 +94,3 @@ Utilisateur ==> login user@user.fr password Arnold_SchwT800
 
 Continuer les tests
 Modifier les informations tailles du profile
-Quand on commande message d'info qu'il faut créer une annonce et l'envoyée
