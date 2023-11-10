@@ -1,19 +1,23 @@
 <!DOCTYPE html>
 <html>
 <body>
-    <div class="email-container">
-        <div class="header">
-            <h1>Email envoyé par Docollective</h1>
-        </div>
-        <div class="content">
-            <p>Bonjour {{ user }},</p>
-            {% for order in orders %}
-            <p>Réservation : {{ order.garment.description }}</p>
-            {% endfor %}
-
-            <p>A l'adresse : {{ address.name }} - {{ address.city }}</p>
-        </div>
-
+<div class="email-container">
+    <div class="header">
+        <h1>Email envoyé par Docollective</h1>
     </div>
+    <div class="content">
+        <p>Bonjour {{ user }},</p>
+        {% for order in orders %}
+        <p>Réservation : {{ order.garment.description }}</p>
+        {% endfor %}
+
+        <p>A l'adresse : {{ address.name }} - {{ address.city }}</p>
+        <p>Pour recevoir votre ou vos vêtements, envoyer nous autant de vêtements dans un état équivalent.</p>
+        <p>Pensez bien à créer une annonce pour chaque vêtement que vous envoyez et mettez la référence de l'annonce
+            dans le colis.</p>
+        <p>Dès réception nous vous envoyons les vêtements que vous avez choisis.</p>
+    </div>
+
+</div>
 </body>
 </html>
