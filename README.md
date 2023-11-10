@@ -35,6 +35,7 @@ ou (or) "NC".
 ### Ajout au panier
 
 Vérification : L'annonce est-elle déjà dans un panier ? Ou bien même dans mon panier ?
+Si on est sur notre propre annonce, Ajouter au panier ne s'affiche pas, mais Supprimer l'annonce à la place.
 
 ### La panier
 
@@ -83,6 +84,14 @@ Vue pour clôturer un ticket.
 
 Une vue pour les superusers, ils peuvent consulter tous les tickets en cours.
 
+## Fixtures
+
+Vous pouvez utiliser toutes les fixtures pour populer la BDD.
+Super utilisateur ==> login superuser@super.fr password Robert_PatrickT1000
+Utilisateur ==> login user@user.fr password Arnold_SchwT800
+
 # A faire
 
 Continuer les tests
+Modifier les informations tailles du profile
+Quand on commande message d'info qu'il faut créer une annonce et l'envoyée
