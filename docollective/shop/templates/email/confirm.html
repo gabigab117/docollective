@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<body>
+    <div class="email-container">
+        <div class="header">
+            <h1>Email envoyé par Docollective</h1>
+        </div>
+        <div class="content">
+            <p>Bonjour {{ user }},</p>
+            {% for order in orders %}
+            <p>Réservation : {{ order.garment.description }}</p>
+            {% endfor %}
+
+            <p>A l'adresse : {{ address.name }} - {{ address.city }}</p>
+        </div>
+
+    </div>
+</body>
+</html>

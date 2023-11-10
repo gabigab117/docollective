@@ -13,6 +13,8 @@ from django.utils import timezone
 from .models import Garment, Cart, Order
 from .forms import OrderForm, PendingForm, GarmentPendingForm
 
+from .emails.confirm_order import confirm_order
+
 
 def index(request):
     # afficher les dernières publications
@@ -133,7 +135,9 @@ def address_choice_view(request):
 @require_POST
 @login_required
 def validate_cart(request):
-    cart = request.user.cart
+    user = request.user
+    address = user.adresses.get(default=True)
+    cart = user.cart
     orders = cart.orders.all()
     orders.all().update(ordered=True, ordered_date=timezone.now())
     for order in orders:
@@ -142,6 +146,10 @@ def validate_cart(request):
         order.garment.save()
 
     cart.delete()
+    confirm_order(user=user, orders=orders, address=address)
+    messages.add_message(request, messages.INFO,
+                         "Pour chaque vêtement demandé vous devez créer "
+                         "une annonce et nous envoyer le vêtement de l'annonce.")
     return redirect("shop:my-shop")
 
 
