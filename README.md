@@ -93,5 +93,3 @@ Utilisateur ==> login user@user.fr password Arnold_SchwT800
 # A faire
 
 Continuer les tests
-Modifier les informations tailles du profile
-Lien vers Tickets cloturé

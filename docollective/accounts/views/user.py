@@ -1,12 +1,12 @@
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth import logout
+from django.contrib.auth import logout, get_user_model
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import LoginView
 from django.core.exceptions import ObjectDoesNotExist
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
-from django.views.generic import CreateView
+from django.views.generic import CreateView, UpdateView
 
 from accounts.forms import ExChangerSignupForm
 from accounts.models import ExChangerAdresses
@@ -49,6 +49,13 @@ def exchanger_profile(request):
     return render(request, "accounts/profile.html", context={"user": user,
                                                              "default_adresse": default_adresse,
                                                              "adresses": adresses})
+
+
+class ProfileUpdate(LoginRequiredMixin, UpdateView):
+    model = get_user_model()
+    template_name = "accounts/update-profile.html"
+    fields = ["upper_size", "lower_size", "foot_size", "favorite_color"]
+    success_url = reverse_lazy("accounts:profile")
 
 
 def default_address_view(request, pk):

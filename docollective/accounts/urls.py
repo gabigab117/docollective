@@ -1,7 +1,7 @@
 from django.urls import path
 from .views import signup, ExChangerLogin, exchanger_logout, exchanger_profile, default_address_view, CreateAddress, \
     ExchangerChangePassword, ExchangerPasswordDone, ExchangerResetPassword, ExchangerResetDone, ExchangerResetConfirm, \
-    ExchangerResetComplete
+    ExchangerResetComplete, ProfileUpdate
 
 app_name = "accounts"
 urlpatterns = [
@@ -9,6 +9,7 @@ urlpatterns = [
     path('login/', ExChangerLogin.as_view(), name="login"),
     path('logout/', exchanger_logout, name="logout"),
     path('profile/', exchanger_profile, name="profile"),
+    path('profile-update/<int:pk>', ProfileUpdate.as_view(), name="profile-update"),
     path('default_adresse/<int:pk>/', default_address_view, name="default_address"),
     path('create-address/', CreateAddress.as_view(), name="create-address"),
     path('change-password/', ExchangerChangePassword.as_view(), name="change-password"),
