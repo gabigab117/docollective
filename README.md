@@ -15,6 +15,7 @@ Un package views :
 ### Profil
 
 L'utilisateur a accès à ses informations personnelles. Il peut créer des adresses et en sélectionner une par défaut.
+Ajout de la MAJ du profil (maj 11 nov 2023)
 
 ### Password
 
@@ -24,6 +25,10 @@ Utilisation des classes de Django ==> 100% héritage
 
 L'idée n'est pas de gagner de l'argent ici (règle du projet Docstring). Je n'ai donc pas intégré Stripe sur ce projet.
 Traditionnelles vues d'index, de détail, de liste des instances, mais...
+
+Un utilisateur qui va sur sa propre annonce ne peut pas l'ajouter au panier, il ne peut que supprimer l'annonce.
+
+Les vues sont dans un package. (Maj 11 nov 2023)
 
 ### Les recommandations
 
@@ -45,6 +50,10 @@ modelformset_factory pour pouvoir sélectionner et supprimer plusieurs élément
 
 Au moment de la commande. J'utilise une vue de l'app accounts. Pour être redirigé au bon endroit j'utilise un paramètre
 d'url.
+
+### Validation du panier
+
+Après avoir déterminé une adresse, lors de la validation du panier un email est envoyé à l'utilisateur.
 
 ### Suppression d'une annonce
 
@@ -86,9 +95,24 @@ Une vue pour les superusers, ils peuvent consulter tous les tickets en cours.
 
 ## Fixtures
 
-Vous pouvez utiliser toutes les fixtures pour populer la BDD.
+Vous devez utiliser toutes les fixtures pour populer la BDD.
 Super utilisateur ==> login superuser@super.fr password Robert_PatrickT1000
 Utilisateur ==> login user@user.fr password Arnold_SchwT800
+
+## .env
+
+SECRET_KEY=
+DEBUG=True
+ALLOWED_HOSTS="127.0.0.1"
+ENV="DEV"
+
+Recaptcha : 
+RECAPTCHA_PUBLIC_KEY=
+RECAPTCHA_PRIVATE_KEY=
+
+Serveur Mail : 
+EMAIL_ID=
+EMAIL_PW=
 
 # A faire
 
