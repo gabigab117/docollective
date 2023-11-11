@@ -73,7 +73,7 @@ class Color(models.Model):
     hexa = models.CharField(verbose_name="Hex", max_length=7)
 
     def __str__(self):
-        return f"{self.name} - {self.hexa}"
+        return self.name
 
     def save(self, *args, **kwargs):
         if not self.hexa.startswith('#'):
