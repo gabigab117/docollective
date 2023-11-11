@@ -95,7 +95,8 @@ Une vue pour les superusers, ils peuvent consulter tous les tickets en cours.
 
 ## Fixtures
 
-Vous devez utiliser toutes les fixtures pour populer la BDD.
+Vous devez utiliser toutes les fixtures pour la BDD ==> python manage.py loaddata accounts.json shop.json sav.json
+
 Super utilisateur ==> login superuser@super.fr password Robert_PatrickT1000
 Utilisateur ==> login user@user.fr password Arnold_SchwT800
 
@@ -106,11 +107,11 @@ DEBUG=True
 ALLOWED_HOSTS="127.0.0.1"
 ENV="DEV"
 
-Recaptcha : 
+Recaptcha :
 RECAPTCHA_PUBLIC_KEY=
 RECAPTCHA_PRIVATE_KEY=
 
-Serveur Mail : 
+Serveur Mail :
 EMAIL_ID=
 EMAIL_PW=
 
