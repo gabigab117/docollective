@@ -1,0 +1,360 @@
+[
+  {
+    "model": "shop.garment",
+    "pk": 1,
+    "fields": {
+      "description": "Pull vert femme",
+      "reference": "77a255c6-2b17-47e8-bf92-9efbb5c31337",
+      "slug": "pull-vert-femme",
+      "user": 1,
+      "price": 40,
+      "size": "40",
+      "color": 15,
+      "year": "2020",
+      "category": "ha",
+      "state": "tb",
+      "type": "f",
+      "pics_1": "SuperUser/pullvertfamme.webp",
+      "pics_2": "",
+      "pics_3": "",
+      "published": "2023-11-10T21:41:22.856Z",
+      "activate": true,
+      "bought": false
+    }
+  },
+  {
+    "model": "shop.garment",
+    "pk": 2,
+    "fields": {
+      "description": "pull vert homme",
+      "reference": "0bd5b1f9-bc66-4602-8fe8-01d2df643bea",
+      "slug": "pull-vert-homme",
+      "user": 1,
+      "price": 10,
+      "size": "46",
+      "color": 15,
+      "year": "2017",
+      "category": "ha",
+      "state": "tb",
+      "type": "h",
+      "pics_1": "SuperUser/pulleverthomme.webp",
+      "pics_2": "",
+      "pics_3": "",
+      "published": "2023-11-10T21:42:01.871Z",
+      "activate": false,
+      "bought": false
+    }
+  },
+  {
+    "model": "shop.garment",
+    "pk": 3,
+    "fields": {
+      "description": "pull homme",
+      "reference": "a929de3b-618a-498a-ba47-44002eaaee51",
+      "slug": "pull-homme",
+      "user": 2,
+      "price": 40,
+      "size": "46",
+      "color": 10,
+      "year": "2001",
+      "category": "ha",
+      "state": "tb",
+      "type": "h",
+      "pics_1": "Roger/pull-coton-homme-noir-made-in-france.jpg",
+      "pics_2": "",
+      "pics_3": "",
+      "published": "2023-11-10T21:43:41.280Z",
+      "activate": true,
+      "bought": false
+    }
+  },
+  {
+    "model": "shop.garment",
+    "pk": 4,
+    "fields": {
+      "description": "pull homme",
+      "reference": "c891958c-c136-4551-a045-2ba330f951c6",
+      "slug": "pull-homme",
+      "user": 2,
+      "price": 45,
+      "size": "46",
+      "color": 13,
+      "year": "2022",
+      "category": "ha",
+      "state": "tb",
+      "type": "h",
+      "pics_1": "Roger/pullrougehomme.webp",
+      "pics_2": "",
+      "pics_3": "",
+      "published": "2023-11-10T21:44:28.100Z",
+      "activate": false,
+      "bought": false
+    }
+  },
+  {
+    "model": "shop.garment",
+    "pk": 5,
+    "fields": {
+      "description": "haut rouge femme",
+      "reference": "85b4f05f-f461-47bf-9805-54e2cf2412af",
+      "slug": "haut-rouge-femme",
+      "user": 1,
+      "price": 18,
+      "size": "40",
+      "color": 13,
+      "year": "2022",
+      "category": "ha",
+      "state": "cn",
+      "type": "f",
+      "pics_1": "SuperUser/haut_rouge_femme.webp",
+      "pics_2": "",
+      "pics_3": "",
+      "published": "2023-11-10T21:45:45.207Z",
+      "activate": true,
+      "bought": false
+    }
+  },
+  {
+    "model": "shop.garment",
+    "pk": 6,
+    "fields": {
+      "description": "chaussures",
+      "reference": "e6dd17fe-3687-4981-adee-0a892350a651",
+      "slug": "chaussures",
+      "user": 1,
+      "price": 50,
+      "size": "47",
+      "color": 10,
+      "year": "2021",
+      "category": "ch",
+      "state": "tb",
+      "type": "h",
+      "pics_1": "SuperUser/chaussures-noires.jpg",
+      "pics_2": "",
+      "pics_3": "",
+      "published": "2023-11-10T21:46:27.908Z",
+      "activate": true,
+      "bought": false
+    }
+  },
+  {
+    "model": "shop.garment",
+    "pk": 7,
+    "fields": {
+      "description": "t shirt homme noir",
+      "reference": "160a9b80-205d-4a99-a229-886679743e3e",
+      "slug": "t-shirt-homme-noir",
+      "user": 2,
+      "price": 40,
+      "size": "44",
+      "color": 10,
+      "year": "2021",
+      "category": "ha",
+      "state": "cn",
+      "type": "h",
+      "pics_1": "Roger/t-shirt-ajuste-manches-longues-cotele-noir-homme-vue1-36165600315290004.jpg",
+      "pics_2": "",
+      "pics_3": "",
+      "published": "2023-11-10T21:47:24.742Z",
+      "activate": true,
+      "bought": false
+    }
+  },
+  {
+    "model": "shop.garment",
+    "pk": 8,
+    "fields": {
+      "description": "chaussures rouges",
+      "reference": "efef8e1b-4b72-4a40-b503-f70607a85b4a",
+      "slug": "chaussures-rouges",
+      "user": 1,
+      "price": 20,
+      "size": "37",
+      "color": 13,
+      "year": "2021",
+      "category": "ch",
+      "state": "cn",
+      "type": "f",
+      "pics_1": "SuperUser/escarpins-bout-en-v-rouges-vernis-talon-haut-seduce-420v.jpg",
+      "pics_2": "",
+      "pics_3": "",
+      "published": "2023-11-10T21:48:27.717Z",
+      "activate": true,
+      "bought": false
+    }
+  },
+  {
+    "model": "shop.garment",
+    "pk": 9,
+    "fields": {
+      "description": "pantalon",
+      "reference": "e1651566-bb25-469e-be69-644d494212f7",
+      "slug": "pantalon",
+      "user": 2,
+      "price": 41,
+      "size": "48",
+      "color": 10,
+      "year": "2005",
+      "category": "pa",
+      "state": "tb",
+      "type": "h",
+      "pics_1": "Roger/pantalon-droit-en-coton-noir-homme-vue5-36165600614101061.jpg",
+      "pics_2": "",
+      "pics_3": "",
+      "published": "2023-11-10T21:49:30.078Z",
+      "activate": true,
+      "bought": false
+    }
+  },
+  {
+    "model": "shop.garment",
+    "pk": 10,
+    "fields": {
+      "description": "chaussures jaunes",
+      "reference": "9efbd620-f4ee-4fb5-adfc-46208852f2ad",
+      "slug": "chaussures-jaunes",
+      "user": 2,
+      "price": 78,
+      "size": "48",
+      "color": 7,
+      "year": "1999",
+      "category": "ch",
+      "state": "cn",
+      "type": "h",
+      "pics_1": "Roger/gaetan-jaune-frenchtheo-galerie-1.jpg",
+      "pics_2": "",
+      "pics_3": "",
+      "published": "2023-11-10T22:19:26.907Z",
+      "activate": true,
+      "bought": false
+    }
+  },
+  {
+    "model": "shop.color",
+    "pk": 1,
+    "fields": {
+      "name": "Blanc",
+      "hexa": "#FFFFFF"
+    }
+  },
+  {
+    "model": "shop.color",
+    "pk": 2,
+    "fields": {
+      "name": "Bleu",
+      "hexa": "#0080FF"
+    }
+  },
+  {
+    "model": "shop.color",
+    "pk": 3,
+    "fields": {
+      "name": "Bleu ciel",
+      "hexa": "#77B5FE"
+    }
+  },
+  {
+    "model": "shop.color",
+    "pk": 4,
+    "fields": {
+      "name": "Bleu marine",
+      "hexa": "#03224C"
+    }
+  },
+  {
+    "model": "shop.color",
+    "pk": 5,
+    "fields": {
+      "name": "Bordeaux",
+      "hexa": "#6D071A"
+    }
+  },
+  {
+    "model": "shop.color",
+    "pk": 6,
+    "fields": {
+      "name": "Cyan",
+      "hexa": "#2BFAFA"
+    }
+  },
+  {
+    "model": "shop.color",
+    "pk": 7,
+    "fields": {
+      "name": "Jaune",
+      "hexa": "#FFFF00"
+    }
+  },
+  {
+    "model": "shop.color",
+    "pk": 8,
+    "fields": {
+      "name": "Marron",
+      "hexa": "#582900"
+    }
+  },
+  {
+    "model": "shop.color",
+    "pk": 9,
+    "fields": {
+      "name": "Mauve (couleur)",
+      "hexa": "#D473D4"
+    }
+  },
+  {
+    "model": "shop.color",
+    "pk": 10,
+    "fields": {
+      "name": "Noir",
+      "hexa": "#000000"
+    }
+  },
+  {
+    "model": "shop.color",
+    "pk": 11,
+    "fields": {
+      "name": "Orange",
+      "hexa": "#FF7F00"
+    }
+  },
+  {
+    "model": "shop.color",
+    "pk": 12,
+    "fields": {
+      "name": "Rose",
+      "hexa": "#FD6C9E"
+    }
+  },
+  {
+    "model": "shop.color",
+    "pk": 13,
+    "fields": {
+      "name": "Rouge",
+      "hexa": "#F00020"
+    }
+  },
+  {
+    "model": "shop.color",
+    "pk": 14,
+    "fields": {
+      "name": "Turquoise",
+      "hexa": "#25FDE9"
+    }
+  },
+  {
+    "model": "shop.color",
+    "pk": 15,
+    "fields": {
+      "name": "Vert",
+      "hexa": "#008020"
+    }
+  },
+  {
+    "model": "shop.color",
+    "pk": 16,
+    "fields": {
+      "name": "Violet",
+      "hexa": "#7F00FF"
+    }
+  }
+]

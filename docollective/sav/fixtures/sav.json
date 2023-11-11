@@ -1,0 +1,54 @@
+[
+  {
+    "model": "sav.ticket",
+    "pk": 1,
+    "fields": {
+      "reference": "18d2793e-3761-4189-9c70-ad827eadf396",
+      "subject": "Probleme avec un vêtement",
+      "closed": false,
+      "user": 2,
+      "date": "2023-11-10T22:02:13.135Z"
+    }
+  },
+  {
+    "model": "sav.ticket",
+    "pk": 2,
+    "fields": {
+      "reference": "51cdfd67-4bb6-4c6e-b492-b7ebb22a0b2f",
+      "subject": "Non reçu",
+      "closed": true,
+      "user": 2,
+      "date": "2023-11-10T22:02:46.741Z"
+    }
+  },
+  {
+    "model": "sav.message",
+    "pk": 1,
+    "fields": {
+      "user": 2,
+      "ticket": 1,
+      "message": "Reçu déchiré",
+      "date": "2023-11-10T22:02:13.137Z"
+    }
+  },
+  {
+    "model": "sav.message",
+    "pk": 2,
+    "fields": {
+      "user": 2,
+      "ticket": 2,
+      "message": "Je n'ai toujours pas reçu",
+      "date": "2023-11-10T22:02:46.744Z"
+    }
+  },
+  {
+    "model": "sav.message",
+    "pk": 3,
+    "fields": {
+      "user": 1,
+      "ticket": 2,
+      "message": "La livraison est effectuée \r\n\r\nMerci",
+      "date": "2023-11-10T23:02:05.716Z"
+    }
+  }
+]
