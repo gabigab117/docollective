@@ -40,7 +40,6 @@ class ExChanger(AbstractUser):
 
     objects = ExChangerManager()
 
-    # Règle : 5 adresses maximum par utilisateur
     @property
     def number_adresses(self):
         number_adresses = ExChangerAdresses.objects.filter(user=self).count()
