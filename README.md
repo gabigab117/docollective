@@ -104,27 +104,22 @@ Utilisateur ==> login user@user.fr password Arnold_SchwT800
 ## .env
 ```
 SECRET_KEY=
-
 DEBUG=True
-
 ALLOWED_HOSTS="127.0.0.1"
-
 ENV="DEV"
 ```
 
 Recaptcha :
-
+```
 RECAPTCHA_PUBLIC_KEY=
-
 RECAPTCHA_PRIVATE_KEY=
-
+```
 
 Serveur Mail :
-
+```
 EMAIL_ID=
-
 EMAIL_PW=
-
+```
 # A faire
 
 Continuer les tests
