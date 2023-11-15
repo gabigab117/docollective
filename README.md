@@ -103,7 +103,7 @@ Utilisateur ==> login user@user.fr password Arnold_SchwT800
 
 ## .env
 ```
-SECRET_KEY=
+SECRET_KEY=yourkey
 DEBUG=True
 ALLOWED_HOSTS="127.0.0.1"
 ENV="DEV"
@@ -111,14 +111,14 @@ ENV="DEV"
 
 Recaptcha :
 ```
-RECAPTCHA_PUBLIC_KEY=
-RECAPTCHA_PRIVATE_KEY=
+RECAPTCHA_PUBLIC_KEY=yourapikey
+RECAPTCHA_PRIVATE_KEY=yourapikey
 ```
 
 Serveur Mail :
 ```
-EMAIL_ID=
-EMAIL_PW=
+EMAIL_ID=yourmail
+EMAIL_PW=yourpassword
 ```
 # A faire
 
