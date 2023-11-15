@@ -102,7 +102,7 @@ Super utilisateur ==> login superuser@super.fr password Robert_PatrickT1000
 Utilisateur ==> login user@user.fr password Arnold_SchwT800
 
 ## .env
-
+```
 SECRET_KEY=
 
 DEBUG=True
@@ -110,7 +110,7 @@ DEBUG=True
 ALLOWED_HOSTS="127.0.0.1"
 
 ENV="DEV"
-
+```
 
 Recaptcha :
 
