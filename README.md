@@ -122,4 +122,18 @@ EMAIL_PW=yourpassword
 ```
 # A faire
 
-Continuer les tests
+## Tests
+
+### Shop app
+
+Vue shop.recommandation_view
+Vues cart
+Vues admin
+
+### SAV app
+
+Tout est à faire
+
+#### Account app
+
+Tout est à faire
