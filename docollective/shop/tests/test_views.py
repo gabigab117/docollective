@@ -147,10 +147,11 @@ class TestView(TestCase):
     def test_my_shop_login_display_another_user_garment_and_order(self):
         """
         Tableau de bord utilisateur, on ne doit pas afficher les annonces d'un autre
-        utilisateur.
+        utilisateur. Ici je log self.user1
         """
         self.client.login(username="gab@gab.com", password="12345678")
         response = self.client.get(reverse("shop:my-shop"))
         # L'annonce ci-dessous appartient à self.user2
         self.assertNotIn(self.garment_2.description, str(response.content))
+        # La commande ci-dessous appartien à self.user2
         self.assertNotIn(str(self.order_user2.reference), str(response.content))
