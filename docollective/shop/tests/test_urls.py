@@ -1,6 +1,6 @@
 from django.test import SimpleTestCase
 from django.urls import reverse, resolve
-from shop.views import index, all_garments, CreateGarment, detail_view, add_to_cart, cart_view, delete_garments, \
+from shop.views import index, all_garments, CreateGarment, detail_view, add_to_cart, cart_view, delete_garments_cart, \
     delete_cart
 
 
@@ -31,7 +31,7 @@ class TestUrls(SimpleTestCase):
 
     def test_delete_garments_url_is_resolved(self):
         url = reverse("shop:delete-garments")
-        self.assertEquals(resolve(url).func, delete_garments)
+        self.assertEquals(resolve(url).func, delete_garments_cart)
 
     def test_delete_cart_url_is_resolved(self):
         url = reverse("shop:delete-cart")
