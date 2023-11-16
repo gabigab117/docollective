@@ -46,10 +46,10 @@ def my_shop_view(request):
     ads_not_published = Garment.objects.filter(user=user, activate=False)
 
     # Acheté
-    purchases = Order.objects.filter(user=user, validation=True)
+    purchases = Order.objects.filter(user=user, validation=True, ordered=True)
 
     # Achats en attente de validation de la plateforme
-    purchases_not_validate = Order.objects.filter(user=user, validation=False)
+    purchases_not_validate = Order.objects.filter(user=user, validation=False, ordered=True)
 
     return render(request, "shop/my_shop.html", context={
         "ads_published": ads_published,
