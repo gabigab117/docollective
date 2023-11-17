@@ -126,9 +126,8 @@ EMAIL_PW=yourpassword
 
 ### Shop app
 
-Vue shop.recommandation_view
-Vues cart
-Vues admin
+Voir Thibault pour les model formset
+Vues Cart
 
 ### SAV app
 
