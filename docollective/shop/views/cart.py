@@ -70,6 +70,7 @@ def validate_cart(request):
     return redirect("shop:my-shop")
 
 
+@login_required
 @require_POST
 def delete_garments_cart(request):
     user = request.user
@@ -81,6 +82,7 @@ def delete_garments_cart(request):
     return redirect("shop:cart")
 
 
+@login_required
 @require_POST
 def delete_cart(request):
     request.user.cart.user_delete_cart()
