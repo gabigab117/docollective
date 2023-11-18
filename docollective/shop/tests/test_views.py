@@ -1,5 +1,5 @@
 from django.contrib.messages import get_messages
-from django.test import TestCase, Client, RequestFactory
+from django.test import TestCase, Client
 from django.urls import reverse
 from django.core.files.uploadedfile import SimpleUploadedFile
 from django.core.exceptions import ObjectDoesNotExist
@@ -29,7 +29,6 @@ def create_test_image():
 class TestView(TestCase):
 
     def setUp(self):
-        self.factory = RequestFactory()
         self.client = Client()
         self.index_url = reverse("index")
         self.all_garments_url = reverse("shop:all")
@@ -89,7 +88,7 @@ class TestView(TestCase):
                                                         last_name="user", password="12345678", is_superuser=True)
 
     def tearDown(self):
-        folders_path = ["mediafiles/test_gabigab", "mediafiles/gabigab2"]
+        folders_path = ["mediafiles/test_gabigab"]
         for path in folders_path:
             if os.path.exists(path):
                 shutil.rmtree(path)
