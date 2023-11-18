@@ -1,4 +1,4 @@
-from django.contrib import messages
+from django.contrib.messages import get_messages
 from django.test import TestCase, Client, RequestFactory
 from django.urls import reverse
 from django.core.files.uploadedfile import SimpleUploadedFile
@@ -12,8 +12,6 @@ import os
 import shutil
 from PIL import Image
 from io import BytesIO
-
-from shop.views import add_to_cart
 
 
 def create_test_image():
@@ -243,15 +241,25 @@ class TestView(TestCase):
     def test_admin_advert_validation_if_superuser_post(self):
         pass  # Voir avec Thibault pour le POST / model formset
 
-    def test_add_to_cart(self):
-        # https://www.programcreek.com/python/example/63725/django.test.client.RequestFactory
-        request = self.factory.post(reverse("shop:add-to-cart", kwargs={"pk": 2}))
-        request.user = self.user1
-        request.user.add_to_cart(request, self.garment_2)
-        request._messages = messages.storage.default_storage(request)
+    def test_add_to_cart_done(self):
+        # Thibault, Pourquoi tester directement la méthode add_to_cart du modèle et pas directement la vue ?
+        # La vue appelle la méthode add_to_cart dans tous les cas
+        self.client.login(username="gab@gab.com", password="12345678")
+        response = self.client.post(reverse("shop:add-to-cart", kwargs={"pk": 2}))
         self.assertEqual(self.user1.cart.orders.count(), 1)
-        response = add_to_cart(request, pk=3)
         self.assertEqual(response.status_code, 302)
-        response.client = Client()
-        response.client.login(username="gab@gab.com", password="12345678")
         self.assertRedirects(response, reverse("shop:cart"))
+
+    def test_add_to_cart_already_in_cart(self):
+        order = Order.objects.create(user=self.user1, garment=self.garment_2,
+                                     ordered=True, ordered_date=timezone.now())
+        cart = Cart.objects.create(user=self.user1)
+        cart.orders.add(order)
+
+        self.client.login(username="gab@gab.com", password="12345678")
+        response = self.client.post(reverse("shop:add-to-cart", kwargs={"pk": 2}))
+        message = list(get_messages(response.wsgi_request))
+        self.assertEqual(str(message[0]), "dock est déjà dans votre panier")
+        self.assertEqual(self.user1.cart.orders.count(), 1)
+        self.assertEqual(response.status_code, 302)
+        self.assertRedirects(response, reverse('shop:detail', kwargs={'slug': 'dock', 'pk': 2}))
