@@ -262,3 +262,15 @@ class TestView(TestCase):
         self.assertEqual(self.user1.cart.orders.count(), 1)
         self.assertEqual(response.status_code, 302)
         self.assertRedirects(response, reverse('shop:detail', kwargs={'slug': 'dock', 'pk': 2}))
+
+    def test_delete_cart(self):
+        order = Order.objects.create(user=self.user1, garment=self.garment_2,
+                                     ordered=True, ordered_date=timezone.now())
+        cart = Cart.objects.create(user=self.user1)
+        cart.orders.add(order)
+
+        self.client.login(username="gab@gab.com", password="12345678")
+        self.assertEqual(self.user1.cart.orders.count(), 1)
+        self.client.post(reverse("shop:delete-cart"))
+        with self.assertRaises(ObjectDoesNotExist):
+            Cart.objects.get(user=self.user1)
