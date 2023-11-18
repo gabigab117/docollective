@@ -88,7 +88,7 @@ class TestView(TestCase):
                                                         last_name="user", password="12345678", is_superuser=True)
 
     def tearDown(self):
-        folders_path = ["mediafiles/test_gabigab"]
+        folders_path = ["mediafiles/test_gabigab", "mediafiles/gabigab2"]
         for path in folders_path:
             if os.path.exists(path):
                 shutil.rmtree(path)
