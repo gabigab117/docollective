@@ -18,9 +18,11 @@ class TicketsTest(TestCase):
                                                         last_name="user", password="12345678", is_superuser=True)
 
         self.ticket1 = Ticket.objects.create(subject="Ticket1", user=self.user1)
+        self.ticket1_closed = Ticket.objects.create(subject="ClosedTicket", user=self.user1, closed=True)
         self.ticket2 = Ticket.objects.create(subject="Ticket2", user=self.user2)
         self.message1 = Message.objects.create(user=self.user1, message="MessageUser1", ticket=self.ticket1)
         self.message1 = Message.objects.create(user=self.user2, message="MessageUser2", ticket=self.ticket2)
+        self.message3 = Message.objects.create(user=self.user1, message="MessageUser1_2", ticket=self.ticket1_closed)
 
     def test_new_ticket_if_login_post(self):
         self.client.login(username="gab@gab.com", password="12345678")
@@ -63,4 +65,18 @@ class TicketsTest(TestCase):
         response = self.client.get(reverse("sav:pending-tickets"))
         self.assertEqual(response.status_code, 302)
         self.assertRedirects(response, f"{reverse('accounts:login')}?next={reverse('sav:pending-tickets')}")
+
+    def test_closed_ticket_with_closed_and_not_closed(self):
+        self.client.login(username="gab@gab.com", password="12345678")
+        response = self.client.get(reverse("sav:closed-tickets"))
+        self.assertIn(self.ticket1_closed.subject, str(response.content))
+        self.assertNotIn(self.ticket1.subject, str(response.content))
+
+    # Tester ticket closed sans login, en se connectant et essayer de voir le ticket d'un autre
+
+    # La vue du ticket, visible par user et superuser
+
+    # Vu ticket admin, uniquement au super user
+
+    # Close ticket
 
