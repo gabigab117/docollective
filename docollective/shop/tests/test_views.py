@@ -213,8 +213,21 @@ class TestView(TestCase):
         self.assertIn(str(self.order_user2.reference), str(response.content))
         self.assertNotIn(str(self.order_user2_2.reference), str(response.content))
 
-    def test_admin_deal_validation_if_superuser_post(self):
-        pass  # Voir avec Thibault pour le POST / model formset
+    # def test_admin_deal_validation_if_superuser_post(self):
+    #     self.client.force_login(self.superuser1)
+    #     formset_data = {
+    #         'form-TOTAL_FORMS': '1',
+    #         'form-INITIAL_FORMS': '0',
+    #         'form-MAX_NUM_FORMS': '',
+    #         'form-0-id': self.order_user1.id,
+    #         'form-0-validation': 'on',
+    #     }
+    #     print(self.order_user1.validation)
+    #     response = self.client.post(reverse("shop:admin-validation"), formset_data)
+    #     self.assertEqual(response.status_code, 200)
+    #     self.order_user1.refresh_from_db()
+    #     print(self.order_user1.validation)
+    #     self.assertTrue(self.order_user1.validation)
 
     # Tests Vues Admin : advert Validation
 
