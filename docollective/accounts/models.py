@@ -1,8 +1,10 @@
 import iso3166
+from django.contrib import messages
 from django.db import models
 from django.contrib.auth.models import AbstractUser, BaseUserManager
+from django.shortcuts import get_object_or_404
 
-from shop.models import SIZES, Color
+from shop.models import SIZES, Color, Garment, Cart, Order
 
 TYPE_USER = [("h", "Homme"), ("f", "Femme"), ("nr", "Non renseigné")]
 
@@ -60,6 +62,26 @@ class ExChanger(AbstractUser):
     @property
     def favorite_color_property(self):
         return self.favorite_color.name if self.favorite_color else "nc"
+
+    def add_to_cart(self, request, garment):
+        cart, _ = Cart.objects.get_or_create(user=self)
+
+        # Vérifier d'abord si dans le panier de l'utilisateur avec message
+        if cart.orders.filter(garment__id=garment.id).exists():
+            messages.add_message(request, messages.WARNING, f"{garment.description} est déjà dans votre panier")
+            return False
+
+        # Vérifier sinon si dans un panier tout court avec message (mais différent que le précédent)
+        elif Cart.objects.filter(orders__garment__id=garment.id).exists():
+            messages.add_message(request, messages.WARNING, f"{garment.description} est déjà dans un panier")
+            return False
+
+            # Sinon ajouter au panier
+        else:
+            order = Order.objects.create(user=self, garment=garment)
+            cart.orders.add(order)
+
+            return True
 
 
 class ExChangerAdresses(models.Model):

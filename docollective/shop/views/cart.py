@@ -15,25 +15,9 @@ from shop.models import Cart, Garment, Order
 @login_required
 def add_to_cart(request, pk):
     user = request.user
-
     garment = get_object_or_404(klass=Garment, pk=pk)
-    cart, _ = Cart.objects.get_or_create(user=user)
-
-    # Vérifier d'abord si dans le panier de l'utilisateur avec message
-    if cart.orders.filter(garment__id=garment.id).exists():
-        messages.add_message(request, messages.WARNING, f"{garment.description} est déjà dans votre panier")
-        return redirect(garment)
-
-    # Vérifier sinon si dans un panier tout court avec message (mais différent que le précédent)
-    elif Cart.objects.filter(orders__garment__id=garment.id).exists():
-        messages.add_message(request, messages.WARNING, f"{garment.description} est déjà dans un panier")
-        return redirect(garment)
-
-    # Sinon ajouter au panier
-    else:
-        order = Order.objects.create(user=user, garment=garment)
-        cart.orders.add(order)
-        return redirect("shop:cart")
+    action = user.add_to_cart(request=request, garment=garment)
+    return redirect("shop:cart") if action else redirect(garment)
 
 
 @login_required
