@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/4.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
-
+import sys
 from pathlib import Path
 import environ
 
@@ -21,6 +21,10 @@ environ.Env.read_env(env_file=str(BASE_DIR / ".env"))
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
+
+
+# Test mode
+TEST_MODE = "test" in sys.argv
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = env("SECRET_KEY")
@@ -161,3 +165,7 @@ VERIFICATION_SUCCESS_TEMPLATE = "verify/success.html"
 VERIFICATION_FAILED_TEMPLATE = "verify/failed.html"
 REQUEST_NEW_EMAIL_TEMPLATE = "verify/new_email.html"
 NEW_EMAIL_SENT_TEMPLATE = 'verify/new_email_sent.html'
+
+# Test avec messages framework
+if TEST_MODE:
+    MESSAGE_STORAGE = 'django.contrib.messages.storage.cookie.CookieStorage'
