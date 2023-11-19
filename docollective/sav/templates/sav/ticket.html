@@ -26,7 +26,7 @@
             </div>
             <div class="card-body">
                 <blockquote class="blockquote mb-0">
-                    <p>{{ message.message }}</p>
+                    <p>{{ message.message|safe }}</p>
                     <footer class="blockquote-footer"><cite title="Source Title">{{ message.date }}</cite>
                     </footer>
                 </blockquote>
