@@ -165,7 +165,3 @@ VERIFICATION_SUCCESS_TEMPLATE = "verify/success.html"
 VERIFICATION_FAILED_TEMPLATE = "verify/failed.html"
 REQUEST_NEW_EMAIL_TEMPLATE = "verify/new_email.html"
 NEW_EMAIL_SENT_TEMPLATE = 'verify/new_email_sent.html'
-
-# Test avec messages framework
-if TEST_MODE:
-    MESSAGE_STORAGE = 'django.contrib.messages.storage.cookie.CookieStorage'
