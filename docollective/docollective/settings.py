@@ -52,6 +52,7 @@ INSTALLED_APPS = [
     "crispy_bootstrap5",
     "verify_email.apps.VerifyEmailConfig",
     "django_cleanup.apps.CleanupConfig",
+    "ckeditor",
 ]
 
 MIDDLEWARE = [
@@ -165,3 +166,30 @@ VERIFICATION_SUCCESS_TEMPLATE = "verify/success.html"
 VERIFICATION_FAILED_TEMPLATE = "verify/failed.html"
 REQUEST_NEW_EMAIL_TEMPLATE = "verify/new_email.html"
 NEW_EMAIL_SENT_TEMPLATE = 'verify/new_email_sent.html'
+
+# CKEDITOR Responsive + disable HTML
+CKEDITOR_CONFIGS = {
+    'default': {
+        "toolbar_Full": [
+                [
+                    "Styles",
+                    "Format",
+                    "Bold",
+                    "Italic",
+                    "Underline",
+                    "Strike",
+                    "SpellChecker",
+                    "Undo",
+                    "Redo",
+                ],
+                ["Link", "Unlink", "Anchor"],
+                ["Image", "Flash", "Table", "HorizontalRule"],
+                ["TextColor", "BGColor"],
+                ["Smiley", "SpecialChar"],
+                # ["Source"],
+            ],
+
+        'width': 'auto',
+
+              },
+        }
