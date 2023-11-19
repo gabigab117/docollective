@@ -124,13 +124,13 @@ EMAIL_PW=yourpassword
 
 ## Tests
 
+Première fois que je me lance vraiment dans les tests. Première fois que je me rends compte à quelle point c'est utile.
+Les tests m'ont permis de corriger une vue, et surtout de sécuriser une vue qui ne l'était pas.
+J'ai volontairement "trop" testé pour vraiment travailler ce sujet.
+
 ### Shop app
 
 Voir Thibault pour les model formset
-
-### SAV app
-
-Tout est à faire
 
 #### Account app
 
