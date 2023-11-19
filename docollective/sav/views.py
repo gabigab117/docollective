@@ -77,8 +77,10 @@ def tickets_admin_view(request):
 @login_required
 @require_POST
 def close_ticket(request, pk):
-    Ticket.objects.update_or_create(
-        pk=pk,
-        defaults={"closed": True}
-    )
-    return redirect("sav:admin-tickets")
+    user = request.user
+    ticket = Ticket.objects.get(pk=pk)
+    if user != ticket.user and not user.is_superuser:
+        raise PermissionDenied()
+    ticket.closed = True
+    ticket.save()
+    return redirect("index")
