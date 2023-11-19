@@ -74,6 +74,7 @@ def tickets_admin_view(request):
     return render(request, "sav/tickets-admin.html", context={"tickets": tickets})
 
 
+@login_required
 @require_POST
 def close_ticket(request, pk):
     Ticket.objects.update_or_create(
