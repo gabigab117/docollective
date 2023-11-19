@@ -20,6 +20,7 @@ class TicketsTest(TestCase):
         self.ticket1 = Ticket.objects.create(subject="Ticket1", user=self.user1)
         self.ticket1_closed = Ticket.objects.create(subject="ClosedTicket", user=self.user1, closed=True)
         self.ticket2 = Ticket.objects.create(subject="Ticket2", user=self.user2)
+        self.ticket2_closed = Ticket.objects.create(subject="Ticket2", user=self.user2, closed=True)
         self.message1 = Message.objects.create(user=self.user1, message="MessageUser1", ticket=self.ticket1)
         self.message1 = Message.objects.create(user=self.user2, message="MessageUser2", ticket=self.ticket2)
         self.message3 = Message.objects.create(user=self.user1, message="MessageUser1_2", ticket=self.ticket1_closed)
@@ -72,11 +73,69 @@ class TicketsTest(TestCase):
         self.assertIn(self.ticket1_closed.subject, str(response.content))
         self.assertNotIn(self.ticket1.subject, str(response.content))
 
-    # Tester ticket closed sans login, en se connectant et essayer de voir le ticket d'un autre
+    def test_closed_ticket_another_ticket_user(self):
+        self.client.login(username="gab@gab.com", password="12345678")
+        response = self.client.get(reverse("sav:closed-tickets"))
+        self.assertNotIn(self.ticket2_closed.subject, str(response.content))
 
-    # La vue du ticket, visible par user et superuser
+    def test_ticket_view_superuser(self):
+        self.client.force_login(self.superuser1)
+        response = self.client.get(reverse("sav:ticket", kwargs={"pk": 2}))
+        self.assertEqual(response.status_code, 200)
 
-    # Vu ticket admin, uniquement au super user
+    def test_ticket_view_user(self):
+        self.client.force_login(self.user2)
+        response = self.client.get(reverse("sav:ticket", kwargs={"pk": 3}))
+        self.assertEqual(response.status_code, 200)
 
-    # Close ticket
+    def test_ticket_view_user_but_not_his_ticket(self):
+        self.client.force_login(self.user1)
+        response = self.client.get(reverse("sav:ticket", kwargs={"pk": 3}))
+        self.assertEqual(response.status_code, 403)
 
+    def test_tickets_admin_view_is_superuser(self):
+        self.client.force_login(self.superuser1)
+        response = self.client.get(reverse("sav:admin-tickets"))
+        self.assertEqual(response.status_code, 200)
+        self.assertNotIn(self.ticket1_closed.subject, str(response.content))
+        self.assertIn(self.ticket1.subject, str(response.content))
+
+    def test_tickets_admin_view_if_user(self):
+        self.client.force_login(self.user1)
+        response = self.client.get(reverse("sav:admin-tickets"))
+        self.assertEqual(response.status_code, 302)
+        self.assertRedirects(response, f"{reverse('accounts:login')}?next={reverse('sav:admin-tickets')}")
+
+    def test_tickets_admin_no_user(self):
+        response = self.client.get(reverse("sav:admin-tickets"))
+        self.assertEqual(response.status_code, 302)
+
+    def test_close_ticket_superuser(self):
+        self.client.force_login(self.superuser1)
+        response = self.client.post(reverse("sav:close", kwargs={"pk": 3}))
+        self.ticket2.refresh_from_db()
+        self.assertTrue(self.ticket2.closed)
+        self.assertEqual(response.status_code, 302)
+        self.assertRedirects(response, reverse("index"))
+
+    def test_close_ticket_user(self):
+        self.client.force_login(self.user1)
+        response = self.client.post(reverse("sav:close", kwargs={"pk": 1}))
+        self.ticket1.refresh_from_db()
+        self.assertTrue(self.ticket1.closed)
+        self.assertEqual(response.status_code, 302)
+        self.assertRedirects(response, reverse("index"))
+
+    def test_close_ticket_another_user(self):
+        self.client.force_login(self.user1)
+        response = self.client.post(reverse("sav:close", kwargs={"pk": 3}))
+        self.ticket2.refresh_from_db()
+        self.assertFalse(self.ticket2.closed)
+        self.assertEqual(response.status_code, 403)
+
+    def test_close_ticket_not_logged_in(self):
+        response = self.client.post(reverse("sav:close", kwargs={"pk": 3}))
+        self.assertEqual(response.status_code, 302)
+        self.ticket2.refresh_from_db()
+        self.assertFalse(self.ticket2.closed)
+        self.assertRedirects(response, f"{reverse('accounts:login')}?next={reverse('sav:close', kwargs={'pk': 3})}")
