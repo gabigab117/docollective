@@ -128,10 +128,6 @@ Première fois que je me lance vraiment dans les tests. Première fois que je me
 Les tests m'ont permis de corriger une vue, et surtout de sécuriser une vue qui ne l'était pas.
 J'ai volontairement "trop" testé pour vraiment travailler ce sujet.
 
-### Shop app
+# Le petit plus
 
-Voir Thibault pour les model formset
-
-#### Account app
-
-Tout est à faire
+Ajout de ckeditor pour le système de messagerie de l'app SAV.
