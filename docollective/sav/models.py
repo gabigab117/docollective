@@ -4,6 +4,7 @@ from uuid import uuid4
 from django.urls import reverse
 
 from docollective.settings import AUTH_USER_MODEL
+from ckeditor.fields import RichTextField
 
 
 class Ticket(models.Model):
@@ -27,7 +28,7 @@ class Ticket(models.Model):
 class Message(models.Model):
     user = models.ForeignKey(AUTH_USER_MODEL, verbose_name="Utilisateur", on_delete=models.CASCADE)
     ticket = models.ForeignKey(Ticket, on_delete=models.CASCADE, verbose_name="Ticket")
-    message = models.TextField(verbose_name="Message")
+    message = RichTextField(verbose_name="Message")
     date = models.DateTimeField(verbose_name="Publication", auto_now_add=True)
 
     def __str__(self):
