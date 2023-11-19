@@ -26,7 +26,7 @@ def create_test_image():
     return uploaded_image
 
 
-class TestView(TestCase):
+class TestViewShop(TestCase):
 
     def setUp(self):
         self.client = Client()
