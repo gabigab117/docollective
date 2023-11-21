@@ -131,3 +131,5 @@ J'ai volontairement "trop" testé pour vraiment travailler ce sujet.
 # Le petit plus
 
 Ajout de ckeditor pour le système de messagerie de l'app SAV.
+
+Personnalisation du rendu de certains modèles dans l'administration.
