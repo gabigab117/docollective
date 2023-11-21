@@ -96,5 +96,8 @@ class ExChangerAdresses(models.Model):
     country = models.CharField(max_length=2, choices=[(c.alpha2.lower(), c.name) for c in iso3166.countries])
     default = models.BooleanField(default=False, verbose_name="Défaut")
 
+    class Meta:
+        verbose_name = "Adresse"
+
     def __str__(self):
         return f"{self.user} - {self.name}"
