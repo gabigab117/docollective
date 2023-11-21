@@ -1,7 +1,10 @@
 from django.contrib import admin
 from .models import ExChanger, ExChangerAdresses
 
-admin.site.register(ExChanger)
+
+@admin.register(ExChanger)
+class UserAdmin(admin.ModelAdmin):
+    list_display = ["first_name", "last_name", "is_active", "is_superuser"]
 
 
 @admin.register(ExChangerAdresses)
