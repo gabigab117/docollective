@@ -1,3 +1,4 @@
+from django.core import mail
 from django.core.exceptions import ObjectDoesNotExist
 from django.test import TestCase, Client
 from django.urls import reverse
@@ -39,6 +40,7 @@ class TestViewShop(TestCase):
         self.assertFalse(user.is_active)
         self.assertEqual(response.status_code, 302)
         self.assertRedirects(response, reverse("index"))
+        self.assertEqual(len(mail.outbox), 1)
 
     def test_signup_post_email_already_exist(self):
         data = {
