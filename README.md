@@ -102,6 +102,7 @@ Super utilisateur ==> login superuser@super.fr password Robert_PatrickT1000
 Utilisateur ==> login user@user.fr password Arnold_SchwT800
 
 ## .env
+
 ```
 SECRET_KEY=yourkey
 DEBUG=True
@@ -110,16 +111,19 @@ ENV="DEV"
 ```
 
 Recaptcha :
+
 ```
 RECAPTCHA_PUBLIC_KEY=yourapikey
 RECAPTCHA_PRIVATE_KEY=yourapikey
 ```
 
 Serveur Mail :
+
 ```
 EMAIL_ID=yourmail
 EMAIL_PW=yourpassword
 ```
+
 # A faire
 
 ## Tests
@@ -131,6 +135,14 @@ Les tests m'ont permis de corriger une vue, et surtout de sécuriser une vue qui
 J'ai volontairement "trop" testé pour vraiment travailler ce sujet.
 
 Pour les prochains projets, écrire les tests en langage Gherkin : https://www.wefiit.com/blog/rediger-en-gherkin
+
+### Note de Thibault
+
+"
+Par contre tu veux vérifier que quand on clique sur signup ça fait bien toutes les étapes de l'envoi de l'email, et que
+quand tu cliques sur le lien d'activation, le compte est bien activé : ça c'est de ton côté. Du coup tu vas "mocker" la
+partie email
+"
 
 # Le petit plus
 
