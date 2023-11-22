@@ -28,6 +28,8 @@ def create_test_image():
 
 class TestViewShop(TestCase):
 
+    # Pour les prochains projets écrire les tests en Gherkin
+
     def setUp(self):
         self.client = Client()
         self.index_url = reverse("index")
