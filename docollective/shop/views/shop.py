@@ -3,7 +3,6 @@ from django.db.models import Q
 from django.shortcuts import render, get_object_or_404
 
 from shop.models import Garment
-from shop.func.recommendations import recommendations
 
 
 def index(request):
@@ -43,13 +42,13 @@ def recommendations_view(request):
 
     user = request.user
     # Haut du corps - ha user.upper_size_property
-    upper_garments = recommendations(user, user.upper_size_property, "ha")
+    upper_garments = user.recommendations(user.upper_size_property, "ha")
 
     # Bas du corps - pa user.lower_size_property
-    lower_garments = recommendations(user, user.lower_size_property, "pa")
+    lower_garments = user.recommendations(user.lower_size_property, "pa")
 
     # Pieds - ch user.foot_size_property
-    foot_garments = recommendations(user, user.foot_size_property, "ch")
+    foot_garments = user.recommendations(user.foot_size_property, "ch")
 
     return render(request, "shop/recommendations.html", context={"upper_garments": upper_garments,
                                                                  "lower_garments": lower_garments,
