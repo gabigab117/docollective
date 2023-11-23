@@ -1,4 +1,5 @@
 from django.contrib.messages import get_messages
+from django.core import mail
 from django.test import TestCase, Client
 from django.urls import reverse
 from django.core.files.uploadedfile import SimpleUploadedFile
@@ -6,7 +7,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.utils import timezone
 
 from shop.models import Garment, Order, Cart, Color
-from accounts.models import ExChanger
+from accounts.models import ExChanger, ExChangerAdresses
 
 import os
 import shutil
@@ -45,6 +46,7 @@ class TestViewShop(TestCase):
                                                    favorite_color=self.color1, type="h")
         self.user2 = ExChanger.objects.create_user(email="gabi@gab.com", username="gabigab2", first_name="Trouvé2",
                                                    last_name="Gabriel2", password="12345678")
+        # Annonces
         self.garment_1: Garment = Garment.objects.create(description="fringue", user=self.user1, price=10, size=42,
                                                          color=self.color1, year="1989", type="ho", category="ha",
                                                          activate=True,
@@ -57,6 +59,7 @@ class TestViewShop(TestCase):
                                                          color=self.color1, year="1999", type="h", category="ha",
                                                          activate=False,
                                                          pics_1=create_test_image())
+        # Annonce associée à une commande validée par l'utilisateur
         self.garment_to_order_user1: Garment = Garment.objects.create(description="chaussures", user=self.user2,
                                                                       price=10,
                                                                       size=42,
@@ -64,6 +67,15 @@ class TestViewShop(TestCase):
                                                                       category="ch",
                                                                       activate=True,
                                                                       pics_1=create_test_image())
+        # Annonce associée à une commande non validée par l'utilisateur
+        self.garment_to_order_user1_2: Garment = Garment.objects.create(description="sandales", user=self.user2,
+                                                                        price=10,
+                                                                        size=41,
+                                                                        color=self.color1, year="1999", type="ho",
+                                                                        category="ch",
+                                                                        activate=True,
+                                                                        pics_1=create_test_image())
+        # Annonce associée à une commande validée par l'utilisateur
         self.garment_to_order_user2: Garment = Garment.objects.create(description="jean", user=self.user1,
                                                                       price=10,
                                                                       size=42,
@@ -71,6 +83,7 @@ class TestViewShop(TestCase):
                                                                       category="pa",
                                                                       activate=True,
                                                                       pics_1=create_test_image())
+        # Annonce associée à une commande validée par l'admin
         self.garment_to_order_user2_2: Garment = Garment.objects.create(description="pull blanc", user=self.user1,
                                                                         price=10,
                                                                         size=42,
@@ -81,13 +94,16 @@ class TestViewShop(TestCase):
 
         self.order_user1: Order = Order.objects.create(user=self.user1, garment=self.garment_to_order_user1,
                                                        ordered=True, ordered_date=timezone.now())
-        self.order_user2: Order = Order.objects.create(user=self.user2, garment=self.garment_to_order_user2,
-                                                       ordered=True, ordered_date=timezone.now())
+        self.order_user2_1: Order = Order.objects.create(user=self.user2, garment=self.garment_to_order_user2,
+                                                         ordered=True, ordered_date=timezone.now())
+        # Order avec validation admin
         self.order_user2_2: Order = Order.objects.create(user=self.user2, garment=self.garment_to_order_user2_2,
                                                          ordered=True, ordered_date=timezone.now(), validation=True)
 
         self.superuser1 = ExChanger.objects.create_user(email="super@user.com", username="super", first_name="super",
                                                         last_name="user", password="12345678", is_superuser=True)
+        # Order non validée destinée à un panier
+        self.order_user1_not_ordered = Order.objects.create(user=self.user1, garment=self.garment_to_order_user1_2)
 
     def tearDown(self):
         folders_path = ["mediafiles/test_gabigab", "mediafiles/gabigab2"]
@@ -175,7 +191,7 @@ class TestViewShop(TestCase):
         # L'annonce ci-dessous appartient à self.user2
         self.assertNotIn(self.garment_2.description, str(response.content))
         # La commande ci-dessous appartien à self.user2
-        self.assertNotIn(str(self.order_user2.reference), str(response.content))
+        self.assertNotIn(str(self.order_user2_1.reference), str(response.content))
 
     def test_recommandations_view_a_recommandation_is_inn(self):
         self.client.login(username="gab@gab.com", password="12345678")
@@ -212,7 +228,7 @@ class TestViewShop(TestCase):
         response = self.client.get(reverse("shop:admin-validation"))
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, "shop/admin-validation.html")
-        self.assertIn(str(self.order_user2.reference), str(response.content))
+        self.assertIn(str(self.order_user2_1.reference), str(response.content))
         self.assertNotIn(str(self.order_user2_2.reference), str(response.content))
 
     # def test_admin_deal_validation_if_superuser_post(self):
@@ -289,3 +305,24 @@ class TestViewShop(TestCase):
         self.client.post(reverse("shop:delete-cart"))
         with self.assertRaises(ObjectDoesNotExist):
             Cart.objects.get(user=self.user1)
+
+    def test_validate_cart(self):
+        # Given an user who has garment(s) in his cart
+        cart = Cart.objects.create(user=self.user1)
+        cart.orders.add(self.order_user1_not_ordered)
+        ExChangerAdresses.objects.create(user=self.user1, name="maison", address_1="pre a chiens", city="Ons",
+                                         zip_code="60650", country="fr", default=True)
+        self.client.force_login(self.user1)
+
+        # When user confirms the orders
+        response = self.client.post(reverse("shop:validate-cart"))
+
+        # Then orders have an ordered date, garment is deactivated and bought, ordered is True and an email is sent
+        self.order_user1_not_ordered.refresh_from_db()
+        self.assertTrue(self.order_user1_not_ordered.ordered)
+        self.assertFalse(self.order_user1_not_ordered.garment.activate)
+        self.assertTrue(self.order_user1_not_ordered.garment.bought)
+        with self.assertRaises(ObjectDoesNotExist):
+            Cart.objects.get(user=self.user1)
+        self.assertEqual(mail.outbox[-1].subject, "Confirmation")
+
