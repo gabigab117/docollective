@@ -14,7 +14,7 @@ def confirm_order(user, orders, address):
     message = strip_tags(convert_to_html_content)
 
     send_mail(
-        subject="Email Validation from Docollective",
+        subject="Confirmation",
         message=message,
         recipient_list=[user.email],
         from_email=None
