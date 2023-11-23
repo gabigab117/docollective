@@ -2,6 +2,7 @@ import iso3166
 from django.contrib import messages
 from django.db import models
 from django.contrib.auth.models import AbstractUser, BaseUserManager
+from django.db.models import Q
 from django.shortcuts import get_object_or_404
 
 from shop.models import SIZES, Color, Garment, Cart, Order
@@ -62,6 +63,14 @@ class ExChanger(AbstractUser):
     @property
     def favorite_color_property(self):
         return self.favorite_color.name if self.favorite_color else "nc"
+
+    def recommendations(self, size, category):
+        query = Garment.objects.filter(
+            Q(size=size), Q(activate=True), Q(type=self.type), Q(category=category),
+            Q(description__icontains=self.favorite_color_property) | Q(
+                color__name__icontains=self.favorite_color_property)
+        )
+        return query
 
     def add_to_cart(self, request, garment):
         cart, _ = Cart.objects.get_or_create(user=self)
