@@ -3,6 +3,7 @@ from django.db.models import Q
 from django.shortcuts import render, get_object_or_404
 
 from shop.models import Garment
+from shop.func.recommendations import recommendations
 
 
 def index(request):
@@ -38,25 +39,18 @@ def all_garments(request):
 
 @login_required
 def recommendations_view(request):
+    # Requêtes Q
+
     user = request.user
-    # Haut du corps
-    upper_garments = Garment.objects.filter(
-        Q(size=user.upper_size_property), Q(activate=True), Q(type=user.type), Q(category="ha"),
-        Q(description__icontains=user.favorite_color_property) | Q(
-            color__name__icontains=user.favorite_color_property)
-    )
-    # Bas du corps
-    lower_garments = Garment.objects.filter(
-        Q(size=user.lower_size_property), Q(activate=True), Q(type=user.type), Q(category="pa"),
-        Q(description__icontains=user.favorite_color_property) | Q(
-            color__name__icontains=user.favorite_color_property)
-    )
-    # Pieds
-    foot_garments = Garment.objects.filter(
-        Q(size=user.foot_size_property), Q(activate=True), Q(type=user.type), Q(category="ch"),
-        Q(description__icontains=user.favorite_color_property) | Q(
-            color__name__icontains=user.favorite_color_property)
-    )
+    # Haut du corps - ha user.upper_size_property
+    upper_garments = recommendations(user, user.upper_size_property, "ha")
+
+    # Bas du corps - pa user.lower_size_property
+    lower_garments = recommendations(user, user.lower_size_property, "pa")
+
+    # Pieds - ch user.foot_size_property
+    foot_garments = recommendations(user, user.foot_size_property, "ch")
+
     return render(request, "shop/recommendations.html", context={"upper_garments": upper_garments,
                                                                  "lower_garments": lower_garments,
                                                                  "foot_garments": foot_garments})
