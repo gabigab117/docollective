@@ -6,9 +6,9 @@ from django.shortcuts import get_object_or_404, redirect, render
 from django.utils import timezone
 from django.views.decorators.http import require_POST
 
-from shop.emails.confirm_order import confirm_order
+from shop.func.confirm_order import confirm_order
 from shop.forms import OrderForm
-from shop.models import Cart, Garment, Order
+from shop.models import Garment, Order
 
 
 @require_POST
