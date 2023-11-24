@@ -68,6 +68,14 @@ my_shop_view. Les annonces publiées, en attente de modération, mes demandes d'
 - Vue pour valider les demandes d'échanges
 - Vue pour valider la publication des annonces
 
+## python manage.py remail
+
+Possibilité d'envoyer des emails aux commandes non validées qui ont plus de 15 jours avec le manager.
+
+```
+python manage.py remail
+```
+
 ## App SAV (sav)
 
 Gérer les demandes des utilisateurs.
