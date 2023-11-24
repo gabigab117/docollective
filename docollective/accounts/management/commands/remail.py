@@ -10,7 +10,7 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         try:
-            orders = Order.objects.filter(ordered_date__lt=timezone.now() - timedelta(days=15))
+            orders = Order.objects.filter(ordered_date__lt=timezone.now() - timedelta(days=15), validation=False)
             for order in orders:
                 subject = f"Docoville, commande {order.reference}"
                 receiver = order.user.email
