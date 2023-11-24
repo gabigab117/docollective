@@ -20,5 +20,6 @@ class Command(BaseCommand):
                     subject, content, 'gabrieltrouve5@gmail.com', [receiver]
                 )
                 email.send()
+                print(f"Mail envoyé pour la commande {order.reference} de {order.user.email}")
         except Exception as e:
             raise CommandError(e)
