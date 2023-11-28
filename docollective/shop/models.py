@@ -1,5 +1,6 @@
 import uuid
 
+from django.contrib import messages
 from django.core.mail import send_mail
 from django.db import models
 from django.urls import reverse
@@ -116,7 +117,7 @@ class Cart(models.Model):
             order.delete()
         self.delete()
 
-    def validate_cart(self, user, address):
+    def validate_cart(self, request, user, address):
         orders = self.orders.all()
         orders.update(ordered=True, ordered_date=timezone.now())
         for order in orders:
@@ -125,3 +126,6 @@ class Cart(models.Model):
             order.garment.save()
         self.delete()
         confirm_order(user, orders, address)
+        messages.add_message(request, messages.INFO,
+                             "Pour chaque vêtement demandé vous devez créer "
+                             "une annonce et nous envoyer le vêtement concerné.")

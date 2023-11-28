@@ -1,4 +1,3 @@
-from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import ObjectDoesNotExist
 from django.forms import modelformset_factory
@@ -54,11 +53,8 @@ def validate_cart_view(request):
     address = user.adresses.get(default=True)
     cart = user.cart
 
-    cart.validate_cart(user, address)
+    cart.validate_cart(request, user, address)
 
-    messages.add_message(request, messages.INFO,
-                         "Pour chaque vêtement demandé vous devez créer "
-                         "une annonce et nous envoyer le vêtement concerné.")
     return redirect("shop:my-shop")
 
 
