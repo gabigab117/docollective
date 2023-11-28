@@ -7,6 +7,7 @@ from django.utils import timezone
 from django.utils.text import slugify
 
 from docollective.settings import AUTH_USER_MODEL
+from shop.func.confirm_order import confirm_order
 
 SIZES = [(str(i), str(i)) for i in range(16, 71)]
 YEARS = [(str(y), str(y)) for y in range(1900, timezone.now().year + 1)]
@@ -114,3 +115,13 @@ class Cart(models.Model):
         for order in self.orders.all():
             order.delete()
         self.delete()
+
+    def validate_cart(self, user, address):
+        orders = self.orders.all()
+        orders.update(ordered=True, ordered_date=timezone.now())
+        for order in orders:
+            order.garment.activate = False
+            order.garment.bought = True
+            order.garment.save()
+        self.delete()
+        confirm_order(user, orders, address)

@@ -3,10 +3,8 @@ from django.contrib.auth.decorators import login_required
 from django.core.exceptions import ObjectDoesNotExist
 from django.forms import modelformset_factory
 from django.shortcuts import get_object_or_404, redirect, render
-from django.utils import timezone
 from django.views.decorators.http import require_POST
 
-from shop.func.confirm_order import confirm_order
 from shop.forms import OrderForm
 from shop.models import Garment, Order
 
@@ -51,22 +49,16 @@ def address_choice_view(request):
 
 @require_POST
 @login_required
-def validate_cart(request):
+def validate_cart_view(request):
     user = request.user
     address = user.adresses.get(default=True)
     cart = user.cart
-    orders = cart.orders.all()
-    orders.all().update(ordered=True, ordered_date=timezone.now())
-    for order in orders:
-        order.garment.activate = False
-        order.garment.bought = True
-        order.garment.save()
 
-    cart.delete()
-    confirm_order(user=user, orders=orders, address=address)
+    cart.validate_cart(user, address)
+
     messages.add_message(request, messages.INFO,
                          "Pour chaque vêtement demandé vous devez créer "
-                         "une annonce et nous envoyer le vêtement de l'annonce.")
+                         "une annonce et nous envoyer le vêtement concerné.")
     return redirect("shop:my-shop")
 
 

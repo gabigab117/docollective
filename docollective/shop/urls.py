@@ -1,6 +1,6 @@
 from django.urls import path
 from .views import detail_view, add_to_cart, cart_view, delete_garments_cart, delete_cart, CreateGarment, all_garments, \
-    DeleteGarment, my_shop_view, validate_cart, address_choice_view, admin_deal_validation_view, recommendations_view, \
+    DeleteGarment, my_shop_view, validate_cart_view, address_choice_view, admin_deal_validation_view, recommendations_view, \
     admin_advert_validation_view
 
 app_name = "shop"
@@ -9,7 +9,7 @@ urlpatterns = [
     path("add-to-cart/<int:pk>/", add_to_cart, name="add-to-cart"),
     path("cart/", cart_view, name="cart"),
     path("address-choice/", address_choice_view, name="address-choice"),
-    path("validate-cart/", validate_cart, name="validate-cart"),
+    path("validate-cart/", validate_cart_view, name="validate-cart"),
     path("delete-garments/", delete_garments_cart, name="delete-garments"),
     path("delete-cart/", delete_cart, name="delete-cart"),
     path("create-garment/", CreateGarment.as_view(), name="create"),
