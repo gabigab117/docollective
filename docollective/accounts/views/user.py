@@ -61,13 +61,6 @@ class ProfileUpdate(LoginRequiredMixin, UpdateView):
 def default_address_view(request, pk):
     user = request.user
 
-    # current_address = user.adresses.get(user=user, default=True)
-    # current_address.default = False
-    # current_address.save()
-    #
-    # new_address = user.adresses.get(pk=pk)
-    # new_address.default = True
-    # new_address.save()
     # Mettre à jour l'adresse actuelle par défaut
     user.adresses.filter(default=True).update(default=False)
 
