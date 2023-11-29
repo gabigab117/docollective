@@ -66,14 +66,13 @@ def default_address_view(request, pk):
     updated_rows = user.update_default_address(pk)
 
     # Vérifier si l'adresse avec `pk=pk` a été mise à jour
+    # updated_rows est un int correspondant au nombre d'éléments mis à jour
     if not updated_rows:
         # Gérer l'erreur ici, par exemple en retournant une réponse d'erreur
         return HttpResponse("Adresse non trouvée", status=404)
 
-    if request.GET.get("redirect") == "validate":
-        return redirect("shop:address-choice")
-
-    return redirect("accounts:profile")
+    return redirect("shop:address-choice") if request.GET.get("redirect") == "validate" else redirect(
+        "accounts:profile")
 
 
 class CreateAddress(LoginRequiredMixin, CreateView):
