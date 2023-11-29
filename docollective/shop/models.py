@@ -118,14 +118,19 @@ class Cart(models.Model):
         self.delete()
 
     def validate_cart(self, request, user, address):
-        orders = self.orders.all()
-        orders.update(ordered=True, ordered_date=timezone.now())
-        for order in orders:
-            order.garment.activate = False
-            order.garment.bought = True
-            order.garment.save()
+        self._update_orders_status()
+        self._update_garment_status()
+        self._confirm_order_and_notify_user(request, user, address)
         self.delete()
-        confirm_order(user, orders, address)
+
+    def _update_orders_status(self):
+        self.orders.all().update(ordered=True, ordered_date=timezone.now())
+
+    def _update_garment_status(self):
+        Garment.objects.filter(order__in=self.orders.all()).update(activate=False, bought=True)
+
+    def _confirm_order_and_notify_user(self, request, user, address):
+        confirm_order(user, self.orders.all(), address)
         messages.add_message(request, messages.INFO,
                              "Pour chaque vêtement demandé vous devez créer "
                              "une annonce et nous envoyer le vêtement concerné.")
