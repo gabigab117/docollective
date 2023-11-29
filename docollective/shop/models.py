@@ -113,8 +113,7 @@ class Cart(models.Model):
         return f"{self.user} - {self.creation_date}"
 
     def user_delete_cart(self):
-        for order in self.orders.all():
-            order.delete()
+        self.orders.all().delete()
         self.delete()
 
     def validate_cart(self, request, user, address):
