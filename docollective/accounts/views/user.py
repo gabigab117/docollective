@@ -59,6 +59,7 @@ class ProfileUpdate(LoginRequiredMixin, UpdateView):
 
 
 def default_address_view(request, pk):
+    # Parler de cette vue avec Thibault ==> update en méthode ? Pourquoi vérifier updated_rows ?
     user = request.user
 
     # Mettre à jour l'adresse actuelle par défaut
