@@ -19,4 +19,4 @@ class OrderAdmin(admin.ModelAdmin):
     list_display = ["user", "ordered", "ordered_date", "validation", "reference"]
     list_editable = ["validation"]
     list_filter = ["ordered", "validation"]
-    search_fields = ["user", "reference"]
+    search_fields = ["user__email__icontains", "reference__icontains", "garment__description__icontains"]
