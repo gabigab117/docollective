@@ -62,11 +62,8 @@ def default_address_view(request, pk):
     # Parler de cette vue avec Thibault ==> update en méthode ? Pourquoi vérifier updated_rows ?
     user = request.user
 
-    # Mettre à jour l'adresse actuelle par défaut
-    user.adresses.filter(default=True).update(default=False)
-
     # Définir la nouvelle adresse comme adresse par défaut
-    updated_rows = user.adresses.filter(pk=pk).update(default=True)
+    updated_rows = user.update_default_address(pk)
 
     # Vérifier si l'adresse avec `pk=pk` a été mise à jour
     if not updated_rows:

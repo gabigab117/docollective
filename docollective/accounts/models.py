@@ -92,6 +92,17 @@ class ExChanger(AbstractUser):
 
             return True
 
+    def _update_to_false_all_user_addresses(self):
+        self.adresses.filter(default=True).update(default=False)
+
+    def _update_to_true_address(self, pk):
+        # Retourne un int représentant le nombre d'enregistrements affectés
+        return self.adresses.filter(pk=pk).update(default=True)
+
+    def update_default_address(self, pk):
+        self._update_to_false_all_user_addresses()
+        return self._update_to_true_address(pk)
+
 
 class ExChangerAdresses(models.Model):
     user: ExChanger = models.ForeignKey(to=ExChanger, on_delete=models.CASCADE, verbose_name="Utilisateur",
