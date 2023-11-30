@@ -65,6 +65,20 @@ class ExChanger(AbstractUser):
         return self.favorite_color.name if self.favorite_color else "nc"
 
     def recommendations(self, size, category):
+        """
+            Generates a query for garment recommendations based on the user's preferences.
+
+            This method filters garments that match the given size and category, are active,
+            correspond to the user's type, and either contain or are associated with the user's
+            favorite color.
+
+            Args:
+            size (str): The size of the garment.
+            category (str): The category of the garment.
+
+            Returns:
+            QuerySet: A QuerySet of garment objects that meet the criteria.
+            """
         query = Garment.objects.filter(
             Q(size=size), Q(activate=True), Q(type=self.type), Q(category=category),
             Q(description__icontains=self.favorite_color_property) | Q(
@@ -73,19 +87,29 @@ class ExChanger(AbstractUser):
         return query
 
     def add_to_cart(self, request, garment):
+        """
+           Adds a specified garment to the user's cart if it's not already in any cart.
+
+           First checks if the garment is already in the user's cart, then checks if it is
+           in any cart. If not in any cart, the garment is added to the user's cart.
+
+           Args:
+           request (HttpRequest): The HttpRequest object.
+           garment (Garment): The Garment object to add to the cart.
+
+           Returns:
+           bool: True if the garment is successfully added, False otherwise.
+           """
         cart, _ = Cart.objects.get_or_create(user=self)
 
-        # Vérifier d'abord si dans le panier de l'utilisateur avec message
         if cart.orders.filter(garment__id=garment.id).exists():
             messages.add_message(request, messages.WARNING, f"{garment.description} est déjà dans votre panier")
             return False
 
-        # Vérifier sinon si dans un panier tout court avec message (mais différent que le précédent)
         elif Cart.objects.filter(orders__garment__id=garment.id).exists():
             messages.add_message(request, messages.WARNING, f"{garment.description} est déjà dans un panier")
             return False
 
-            # Sinon ajouter au panier
         else:
             order = Order.objects.create(user=self, garment=garment)
             cart.orders.add(order)
@@ -96,10 +120,21 @@ class ExChanger(AbstractUser):
         self.adresses.filter(default=True).update(default=False)
 
     def _update_to_true_address(self, pk):
-        # Retourne un int représentant le nombre d'enregistrements affectés
         return self.adresses.filter(pk=pk).update(default=True)
 
     def update_default_address(self, pk):
+        """
+            Updates the default address of the user.
+
+            Sets all addresses of the user to non-default and then updates the specified address
+            to be the default one.
+
+            Args:
+            pk (int): The primary key of the address to be set as default.
+
+            Returns:
+            int: The number of records affected by the update operation.
+            """
         self._update_to_false_all_user_addresses()
         return self._update_to_true_address(pk)
 
