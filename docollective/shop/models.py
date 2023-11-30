@@ -58,6 +58,15 @@ class Garment(models.Model):
 
     @staticmethod
     def __send_email():
+        """
+            Sends an email notification about a new announcement.
+
+            This static method sends a predefined email with the subject 'Nouvelle annonce' and a
+            message stating 'Nouvelle annonce déposée' to a specified recipient list.
+
+            Note:
+            This method is private and intended for internal use within its class.
+            """
         send_mail(subject="Nouvelle annonce", message="Nouvelle annonce déposée",
                   recipient_list=["gabrieltrouve5@yahoo.com"], from_email=None)
 
@@ -113,10 +122,28 @@ class Cart(models.Model):
         return f"{self.user} - {self.creation_date}"
 
     def user_delete_cart(self):
+        """
+           Deletes all orders in the user's cart and then deletes the cart itself.
+
+           This method first removes all orders associated with the cart and then proceeds to delete
+           the cart instance.
+           """
         self.orders.all().delete()
         self.delete()
 
     def validate_cart(self, request, user, address):
+        """
+            Validates the cart, updates orders and garments status, confirms the order, and notifies the user.
+
+            Executes a series of internal methods to update the status of orders and garments, confirm
+            the order with the given address, and send a notification to the user. After these operations,
+            the cart is deleted.
+
+            Args:
+            request (HttpRequest): The HttpRequest object.
+            user (User): The user object associated with the cart.
+            address (Address): The address object for the order delivery.
+            """
         self._update_orders_status()
         self._update_garment_status()
         self._confirm_order_and_notify_user(request, user, address)

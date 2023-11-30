@@ -36,19 +36,28 @@ class DeleteGarment(LoginRequiredMixin, DeleteView):
 
 @login_required
 def my_shop_view(request):
-    user = request.user
-    # Penser à la recherche dans les commandes
+    """
+    Displays the user's shop activities, including advertisements and purchases.
 
-    # Mes annonces
+    This view presents the user with their active and pending advertisements, along with
+    their confirmed and pending purchases. It separates the garments and orders into distinct
+    categories based on their status for easier management and viewing.
+
+    Args:
+    request (HttpRequest): The request object containing the user's information.
+
+    Returns:
+    HttpResponse: Renders the 'my_shop' page with the user's published and unpublished ads,
+    and both validated and pending purchase orders.
+    """
+    user = request.user
+
     ads_published = Garment.objects.filter(user=user, activate=True)
 
-    # En modération
     ads_not_published = Garment.objects.filter(user=user, activate=False)
 
-    # Acheté
     purchases = Order.objects.filter(user=user, validation=True, ordered=True)
 
-    # Achats en attente de validation de la plateforme
     purchases_not_validate = Order.objects.filter(user=user, validation=False, ordered=True)
 
     return render(request, "shop/my_shop.html", context={
