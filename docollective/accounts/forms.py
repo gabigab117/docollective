@@ -2,11 +2,11 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import UserCreationForm
 from captcha.fields import ReCaptchaField
 
-from docollective.settings import TEST_MODE
+from docollective.settings import TEST_MODE, ENV
 
 
 class ExChangerSignupForm(UserCreationForm):
-    if not TEST_MODE:
+    if not TEST_MODE and not ENV == "DEV":
         captcha = ReCaptchaField()
 
     class Meta:
