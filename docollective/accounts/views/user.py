@@ -21,6 +21,21 @@ logger = logging.getLogger(__name__)
 
 
 def signup(request):
+    """
+        Processes the user signup request.
+
+        If the request is POST, it attempts to create a new user using the ExChangerSignupForm.
+        Upon successful validation, it tries to send a verification email. If there's an SMTP
+        authentication error, it logs the error and saves the form without sending the email.
+        After handling the POST request, it redirects to the index page. For non-POST requests,
+        it simply displays the signup form.
+
+        Args:
+        request (HttpRequest): The HttpRequest object representing the current request.
+
+        Returns:
+        HttpResponse: Renders the signup page with the signup form.
+        """
     if request.method == "POST":
         form = ExChangerSignupForm(request.POST)
         if form.is_valid():
@@ -69,6 +84,20 @@ class ProfileUpdate(LoginRequiredMixin, UpdateView):
 
 
 def default_address_view(request, pk):
+    """
+      Sets a user's address as default and redirects based on the request.
+
+      Updates the default address of the user to the address specified by pk. If the address
+      is not found, returns a 404 response. Redirects to either the address choice or profile
+      page based on the request's redirect parameter.
+
+      Args:
+      request (HttpRequest): The request object.
+      pk (int): Primary key of the address to set as default.
+
+      Returns:
+      HttpResponse or HttpResponseRedirect: 404 response or a redirect response.
+      """
     user = request.user
 
     updated_rows = user.update_default_address(pk)
