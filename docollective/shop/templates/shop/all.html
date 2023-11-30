@@ -11,9 +11,13 @@
 </div>
 <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center mb-5">
     <form role="search" class="d-flex">
-
         <input type="search" placeholder="Rechercher" aria-label="Rechercher" name="search" class="form-control">
 
+
+        {% for name, db_name in categories %}
+        <input type="checkbox" id="{{ name }}" name="{{ name }}" value="{{ db_name }}">
+        <label for="{{ name }}">{{ name }}</label>
+        {% endfor %}
 
         <button type="submit" class="btn btn-outline-dark ms-2">Rechercher</button>
 
