@@ -125,8 +125,6 @@ EMAIL_ID=yourmail
 EMAIL_PW=yourpassword
 ```
 
-# A faire
-
 ## Tests
 
 Première fois que je me lance vraiment dans les tests. Première fois que je me rends compte à quelle point c'est utile.
@@ -137,13 +135,6 @@ J'ai volontairement "trop" testé pour vraiment travailler ce sujet.
 
 Pour les prochains projets, écrire les tests en langage Gherkin : https://www.wefiit.com/blog/rediger-en-gherkin
 
-### Note de Thibault
-
-"
-Par contre tu veux vérifier que quand on clique sur signup ça fait bien toutes les étapes de l'envoi de l'email, et que
-quand tu cliques sur le lien d'activation, le compte est bien activé : ça c'est de ton côté. Du coup tu vas "mocker" la
-partie email
-"
 
 # Le petit plus
 
