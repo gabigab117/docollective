@@ -118,13 +118,6 @@ ALLOWED_HOSTS="127.0.0.1"
 ENV="DEV"
 ```
 
-Recaptcha :
-
-```
-RECAPTCHA_PUBLIC_KEY=yourapikey
-RECAPTCHA_PRIVATE_KEY=yourapikey
-```
-
 Serveur Mail :
 
 ```
