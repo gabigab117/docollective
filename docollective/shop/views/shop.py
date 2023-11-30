@@ -46,9 +46,10 @@ def all_garments(request):
     categories = set((garment.get_category_display(), garment.category) for garment in garments)
 
     search = request.GET.get("search")
+    category = request.GET.get("Chaussures")
     if search:
         garments = Garment.objects.filter(
-            Q(activate=True),
+            Q(activate=True), Q(category=category),
             Q(description__icontains=search) | Q(color__name__icontains=search)
         )
 
