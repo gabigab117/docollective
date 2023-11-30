@@ -1,3 +1,5 @@
+from smtplib import SMTPAuthenticationError
+
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout, get_user_model
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -13,14 +15,22 @@ from accounts.models import ExChangerAdresses
 
 from verify_email.email_handler import send_verification_email
 
+import logging
+
+logger = logging.getLogger(__name__)
+
 
 def signup(request):
     if request.method == "POST":
         form = ExChangerSignupForm(request.POST)
         if form.is_valid():
-            inactive_user = send_verification_email(request, form)
+            try:
+                inactive_user = send_verification_email(request, form)
+            except SMTPAuthenticationError:
+                logger.critical(f"Smtp not running for {form.instance.email}")
+                form.save()
             return redirect("index")
-        # Sans le else j'ai un formulaire vide si pas valide
+
     else:
         form = ExChangerSignupForm()
     return render(request, "accounts/signup.html", context={"form": form})
@@ -59,16 +69,11 @@ class ProfileUpdate(LoginRequiredMixin, UpdateView):
 
 
 def default_address_view(request, pk):
-    # Parler de cette vue avec Thibault ==> update en méthode ? Pourquoi vérifier updated_rows ?
     user = request.user
 
-    # Définir la nouvelle adresse comme adresse par défaut
     updated_rows = user.update_default_address(pk)
 
-    # Vérifier si l'adresse avec `pk=pk` a été mise à jour
-    # updated_rows est un int correspondant au nombre d'éléments mis à jour
     if not updated_rows:
-        # Gérer l'erreur ici, par exemple en retournant une réponse d'erreur
         return HttpResponse("Adresse non trouvée", status=404)
 
     return redirect("shop:address-choice") if request.GET.get("redirect") == "validate" else redirect(
