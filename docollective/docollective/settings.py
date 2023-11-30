@@ -167,29 +167,47 @@ VERIFICATION_FAILED_TEMPLATE = "verify/failed.html"
 REQUEST_NEW_EMAIL_TEMPLATE = "verify/new_email.html"
 NEW_EMAIL_SENT_TEMPLATE = 'verify/new_email_sent.html'
 
+# Logging
+LOGGING = {
+    "version": 1,  # the dictConfig format version
+    "disable_existing_loggers": False,  # retain the default loggers
+    "handlers": {
+        "file": {
+            "class": "logging.FileHandler",
+            "filename": "general.log",
+        },
+    },
+    "loggers": {
+        "": {
+            "level": "DEBUG",
+            "handlers": ["file"],
+        },
+    },
+}
+
 # CKEDITOR Responsive + disable HTML
 CKEDITOR_CONFIGS = {
     'default': {
         "toolbar_Full": [
-                [
-                    "Styles",
-                    "Format",
-                    "Bold",
-                    "Italic",
-                    "Underline",
-                    "Strike",
-                    "SpellChecker",
-                    "Undo",
-                    "Redo",
-                ],
-                ["Link", "Unlink", "Anchor"],
-                ["Image", "Flash", "Table", "HorizontalRule"],
-                ["TextColor", "BGColor"],
-                ["Smiley", "SpecialChar"],
-                # ["Source"],
+            [
+                "Styles",
+                "Format",
+                "Bold",
+                "Italic",
+                "Underline",
+                "Strike",
+                "SpellChecker",
+                "Undo",
+                "Redo",
             ],
+            ["Link", "Unlink", "Anchor"],
+            ["Image", "Flash", "Table", "HorizontalRule"],
+            ["TextColor", "BGColor"],
+            ["Smiley", "SpecialChar"],
+            # ["Source"],
+        ],
 
         'width': 'auto',
 
-              },
-        }
+    },
+}
