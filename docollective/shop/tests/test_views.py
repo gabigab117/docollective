@@ -106,10 +106,9 @@ class TestViewShop(TestCase):
         self.order_user1_not_ordered = Order.objects.create(user=self.user1, garment=self.garment_to_order_user1_2)
 
     def tearDown(self):
-        folders_path = ["mediafiles/test_gabigab", "mediafiles/gabigab2"]
-        for path in folders_path:
-            if os.path.exists(path):
-                shutil.rmtree(path)
+        folder_path = "mediatestfiles"
+        if os.path.exists(folder_path):
+            shutil.rmtree(folder_path)
 
     def test_index_GET(self):
         response = self.client.get(self.index_url)

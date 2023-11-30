@@ -36,10 +36,9 @@ class TestModels(TestCase):
                                                          pics_1=create_test_image())
 
     def tearDown(self):
-        folders_path = ["mediafiles/test_gabigab"]
-        for path in folders_path:
-            if os.path.exists(path):
-                shutil.rmtree(path)
+        folder_path = "mediatestfiles"
+        if os.path.exists(folder_path):
+            shutil.rmtree(folder_path)
 
     def test_garment_has_a_slug(self):
         self.assertEqual(self.garment_1.slug, "fringue")
