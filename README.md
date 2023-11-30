@@ -1,4 +1,4 @@
-# DOCOLLECTIVE
+# DOCOLLECTIVE (Utiliser la branche main)
 
 Une plateforme d'échange de vêtements. Réalisée dans le cadre du projet du mois d'octobre Docstring.
 L'idée est qu'un utilisateur peut choisir 1 ou plusieurs vêtements. Il valide la commande (sans payer). En contrepartie
