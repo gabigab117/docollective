@@ -11,6 +11,19 @@ from .models import Ticket, Message
 
 @login_required
 def new_ticket(request):
+    """
+      Creates a new ticket and message from a user submission.
+
+      This view handles the creation of a new support ticket. On POST request with valid form data,
+      it creates a ticket and an associated message, then redirects to the same page with an
+      information message. For GET requests, it displays the message form.
+
+      Args:
+      request (HttpRequest): The request object, containing user and form data.
+
+      Returns:
+      HttpResponse: Renders the new ticket creation page or redirects after form submission.
+      """
     user = request.user
 
     if request.method == "POST":
@@ -48,6 +61,21 @@ def closed_tickets(request):
 
 @login_required
 def ticket_view(request, pk):
+    """
+    Displays and handles responses for a specific support ticket.
+
+    Retrieves the ticket by its primary key (pk). If the user is neither the ticket owner nor a
+    superuser, access is denied. On a POST request with valid form data, it adds a response to the
+    ticket and redirects to the ticket page. For GET requests, it displays the ticket details and
+    response form.
+
+    Args:
+    request (HttpRequest): The request object, containing user data and form submissions.
+    pk (int): Primary key of the ticket to be viewed.
+
+    Returns:
+    HttpResponse: Renders the ticket details page or redirects after a response is submitted.
+    """
     user = request.user
     ticket = get_object_or_404(Ticket, pk=pk)
     if user != ticket.user and not user.is_superuser:
@@ -77,6 +105,19 @@ def tickets_admin_view(request):
 @login_required
 @require_POST
 def close_ticket(request, pk):
+    """
+     Closes a specified support ticket.
+
+     Only allows the ticket's owner or a superuser to close the ticket. Retrieves the ticket
+     by its primary key (pk) and sets its status to closed. Redirects to the index page after closure.
+
+     Args:
+     request (HttpRequest): The request object containing user data.
+     pk (int): Primary key of the ticket to be closed.
+
+     Returns:
+     HttpResponseRedirect: Redirects to the index page after closing the ticket.
+     """
     user = request.user
     ticket = Ticket.objects.get(pk=pk)
     if user != ticket.user and not user.is_superuser:
