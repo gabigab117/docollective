@@ -104,6 +104,7 @@ Une vue pour les superusers, ils peuvent consulter tous les tickets en cours.
 ## Fixtures
 
 Vous devez utiliser toutes les fixtures pour la BDD :
+
 ```
 python manage.py loaddata accounts.json shop.json sav.json
 ```
@@ -128,6 +129,14 @@ EMAIL_ID=yourmail
 EMAIL_PW=yourpassword
 ```
 
+En mode développement le recaptcha est automatiquement désactivé. Mais si vous souhaitez l'utiliser il vous faut ces
+constantes dans settings.py : 
+
+```
+RECAPTCHA_PUBLIC_KEY=yourapikey
+RECAPTCHA_PRIVATE_KEY=yourapikey
+```
+
 ## Tests
 
 Première fois que je me lance vraiment dans les tests. Première fois que je me rends compte à quelle point c'est utile.
@@ -137,7 +146,6 @@ Les tests m'ont permis de corriger une vue, et surtout de sécuriser une vue qui
 J'ai volontairement "trop" testé pour vraiment travailler ce sujet.
 
 Pour les prochains projets, écrire les tests en langage Gherkin : https://www.wefiit.com/blog/rediger-en-gherkin
-
 
 # Le petit plus
 
