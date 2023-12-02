@@ -103,7 +103,10 @@ Une vue pour les superusers, ils peuvent consulter tous les tickets en cours.
 
 ## Fixtures
 
-Vous devez utiliser toutes les fixtures pour la BDD ==> python manage.py loaddata accounts.json shop.json sav.json
+Vous devez utiliser toutes les fixtures pour la BDD :
+```
+python manage.py loaddata accounts.json shop.json sav.json
+```
 
 Super utilisateur ==> login superuser@super.fr password Robert_PatrickT1000
 
