@@ -4,6 +4,7 @@ from django.views.decorators.http import require_POST
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponseRedirect
 from django.core.exceptions import PermissionDenied
+from django.db import transaction
 
 from .forms import MessageForm, ResponseForm
 from .models import Ticket, Message
@@ -29,10 +30,11 @@ def new_ticket(request):
     if request.method == "POST":
         form = MessageForm(request.POST)
         if form.is_valid():
-            ticket = Ticket.objects.create(user=user, subject=form.cleaned_data["subject"])
-            form.instance.user = user
-            form.instance.ticket = ticket
-            form.save()
+            with transaction.atomic():
+                ticket = Ticket.objects.create(user=user, subject=form.cleaned_data["subject"])
+                form.instance.user = user
+                form.instance.ticket = ticket
+                form.save()
             messages.add_message(request,
                                  message=f"Ticket {ticket.reference} ouvert. "
                                          f"Vous serez averti par mail lorsqu'une réponse sera donnée",
