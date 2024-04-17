@@ -46,18 +46,22 @@ def all_garments(request):
     categories = set((garment.get_category_display(), garment.category) for garment in garments)
     # garments = {garment.category: garment.get_category_display()} categories = garments.keys()
 
+    redirection = request.GET.get("category")
+    if redirection:
+        garments = Garment.objects.filter(category=redirection, activate=True)
+
+    return render(request, "shop/all.html", context={"garments": garments, "categories": categories})
+
+
+def search_results_view(request):
+    garments = Garment.objects.filter(activate=True)
     search = request.GET.get("search")
     if search:
         garments = Garment.objects.filter(
             Q(activate=True),
             Q(description__icontains=search) | Q(color__name__icontains=search)
         )
-
-    redirection = request.GET.get("category")
-    if redirection:
-        garments = Garment.objects.filter(category=redirection, activate=True)
-
-    return render(request, "shop/all.html", context={"garments": garments, "categories": categories})
+    return render(request, "shop/includes/search.html", context={"garments": garments})
 
 
 @login_required
