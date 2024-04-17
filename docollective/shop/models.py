@@ -12,9 +12,9 @@ from shop.func.confirm_order import confirm_order
 
 SIZES = [(str(i), str(i)) for i in range(16, 71)]
 YEARS = [(str(y), str(y)) for y in range(1900, timezone.now().year + 1)]
-CATEGORY = [("ch", "Chaussures"), ("pa", "Pantalons"), ("ha", "Hauts")]
 STATE = [("b", "Bon état"), ("tb", "Très bon état"), ("cn", "Comme neuf")]
 TYPE = [("h", "Homme"), ("f", "Femme"), ("e", "Enfant")]
+CATEGORY = [("ch", "Chaussures"), ("pa", "Pantalons"), ("ha", "Hauts")]
 
 
 def user_directory_path(instance, filename):
@@ -51,10 +51,11 @@ class Garment(models.Model):
         if not self.slug:
             self.slug = slugify(self.description)
 
-        if self not in Garment.objects.all():
+        if self._state.adding:
+            super().save(*args, **kwargs)
             Garment.__send_email()
-
-        super().save(*args, **kwargs)
+        else:
+            super().save(*args, **kwargs)
 
     @staticmethod
     def __send_email():
